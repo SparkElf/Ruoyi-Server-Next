@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import com.ruoyi.common.utils.uuid.IdUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.common.constant.Constants;
@@ -354,7 +356,7 @@ public class SysMenuServiceImpl implements ISysMenuService
      */
     public String getRouteName(SysMenu menu)
     {
-        String routerName = StringUtils.capitalize(menu.getPath());
+        String routerName = StringUtils.capitalize(IdUtils.fastSimpleUUID());
         // 非外链并且是一级目录（类型为目录）
         if (isMenuFrame(menu))
         {
