@@ -356,6 +356,7 @@ public class SysMenuServiceImpl implements ISysMenuService
      */
     public String getRouteName(SysMenu menu)
     {
+        //用menuId会导致由于有些动态路由没有Id使得name为空，前端keepalive缓存会出现异常
         String routerName = StringUtils.capitalize(IdUtils.fastSimpleUUID());
         // 非外链并且是一级目录（类型为目录）
         if (isMenuFrame(menu))
