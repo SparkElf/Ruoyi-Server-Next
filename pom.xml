@@ -16,7 +16,7 @@
         <ruoyi.version>3.8.7</ruoyi.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <druid.version>1.2.20</druid.version>
         <bitwalker.version>1.21</bitwalker.version>
@@ -34,7 +34,11 @@
     <!-- 依赖声明 -->
     <dependencyManagement>
         <dependencies>
-
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.20</version>
+            </dependency>
             <!-- SpringBoot的依赖配置-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -62,7 +66,29 @@
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>${pagehelper.boot.version}</version>
+                <version>1.4.7</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>mybatis-spring</artifactId>
+                        <groupId>org.mybatis</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>mybatis</artifactId>
+                        <groupId>org.mybatis</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.5.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension</artifactId>
+                <version>3.5.2</version>
+                <scope>compile</scope>
             </dependency>
 
             <!-- 获取系统信息 -->
@@ -193,8 +219,8 @@
     <repositories>
         <repository>
             <id>public</id>
-            <name>aliyun nexus</name>
-            <url>https://maven.aliyun.com/repository/public</url>
+            <name>huawei nexus</name>
+            <url>https://mirrors.huaweicloud.com/repository/maven/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -204,8 +230,8 @@
     <pluginRepositories>
         <pluginRepository>
             <id>public</id>
-            <name>aliyun nexus</name>
-            <url>https://maven.aliyun.com/repository/public</url>
+            <name>huawei nexus</name>
+            <url>https://mirrors.huaweicloud.com/repository/maven/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>

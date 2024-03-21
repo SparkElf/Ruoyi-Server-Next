@@ -16,6 +16,18 @@
     </description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+            <version>3.5.2</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- Spring框架基本的核心工具 -->
         <dependency>
