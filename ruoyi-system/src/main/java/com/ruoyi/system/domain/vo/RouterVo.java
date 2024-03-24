@@ -41,10 +41,7 @@ public class RouterVo
      */
     private String query;
 
-    /**
-     * 当你一个路由下面的 children 声明的路由大于1个时，自动会变成嵌套的模式--如组件页面
-     */
-    private Boolean alwaysShow;
+
 
     /**
      * 其他元素
@@ -114,16 +111,6 @@ public class RouterVo
     public void setQuery(String query)
     {
         this.query = query;
-    }
-
-    public Boolean getAlwaysShow()
-    {
-        return alwaysShow;
-    }
-
-    public void setAlwaysShow(Boolean alwaysShow)
-    {
-        this.alwaysShow = alwaysShow;
     }
 
     public MetaVo getMeta()

@@ -80,6 +80,7 @@ public class SysLoginController
     public AjaxResult getRouters()
     {
         Long userId = SecurityUtils.getUserId();
+        //menus已经是树状结构了
         List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
         return AjaxResult.success(menuService.buildMenus(menus));
     }
