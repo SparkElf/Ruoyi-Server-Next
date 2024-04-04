@@ -6,6 +6,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -15,6 +17,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 
  * @author ruoyi
  */
+@Data
 public class SysDept extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -34,6 +37,8 @@ public class SysDept extends BaseEntity
     /** 显示顺序 */
     private Integer orderNum;
 
+    /** 负责人Id */
+    private String leaderId;
     /** 负责人 */
     private String leader;
 
