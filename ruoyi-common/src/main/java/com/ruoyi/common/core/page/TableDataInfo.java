@@ -1,6 +1,10 @@
 package com.ruoyi.common.core.page;
 
+import com.github.pagehelper.PageInfo;
+import com.ruoyi.common.constant.HttpStatus;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +33,10 @@ public class TableDataInfo implements Serializable
      */
     public TableDataInfo()
     {
+        setCode(HttpStatus.SUCCESS);
+        setMsg("查询成功");
+        setRows(new ArrayList<>());
+        setTotal(0);
     }
 
     /**
@@ -39,8 +47,10 @@ public class TableDataInfo implements Serializable
      */
     public TableDataInfo(List<?> list, int total)
     {
-        this.rows = list;
-        this.total = total;
+        setCode(HttpStatus.SUCCESS);
+        setMsg("查询成功");
+        setRows(list);
+        setTotal(total);
     }
 
     public long getTotal()
