@@ -1,7 +1,10 @@
 package com.ruoyi.bpm.service.definition;
 
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.module.bpm.controller.admin.definition.vo.model.*;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.ruoyi.bpm.controller.definition.vo.model.BpmModelCreateReqVO;
+import com.ruoyi.bpm.controller.definition.vo.model.BpmModelPageReqVO;
+import com.ruoyi.bpm.controller.definition.vo.model.BpmModelUpdateReqVO;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.repository.Model;
 
@@ -20,7 +23,7 @@ public interface BpmModelService {
      * @param pageVO 分页查询
      * @return 流程模型分页
      */
-    PageResult<Model> getModelPage(BpmModelPageReqVO pageVO);
+    IPage<Model> getModelPage(BpmModelPageReqVO pageVO);
 
     /**
      * 创建流程模型

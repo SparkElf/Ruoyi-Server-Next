@@ -1,6 +1,7 @@
 package com.ruoyi.bpm.controller.definition.vo.model;
 
-import cn.iocoder.yudao.framework.common.pojo.PageParam;
+
+import com.ruoyi.common.core.page.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

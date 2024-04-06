@@ -1,25 +1,15 @@
 package com.ruoyi.bpm.service.definition;
 
-import cn.hutool.core.util.StrUtil;
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.util.json.JsonUtils;
-import cn.iocoder.yudao.framework.common.util.object.PageUtils;
-import cn.iocoder.yudao.framework.common.util.validation.ValidationUtils;
-import cn.iocoder.yudao.module.bpm.controller.admin.definition.vo.model.BpmModelCreateReqVO;
-import cn.iocoder.yudao.module.bpm.controller.admin.definition.vo.model.BpmModelPageReqVO;
-import cn.iocoder.yudao.module.bpm.controller.admin.definition.vo.model.BpmModelUpdateReqVO;
-import cn.iocoder.yudao.module.bpm.convert.definition.BpmModelConvert;
-import cn.iocoder.yudao.module.bpm.dal.dataobject.definition.BpmFormDO;
-import cn.iocoder.yudao.module.bpm.enums.definition.BpmModelFormTypeEnum;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.BpmTaskCandidateInvoker;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.util.BpmnModelUtils;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.util.FlowableUtils;
-import cn.iocoder.yudao.module.bpm.service.definition.dto.BpmModelMetaInfoRespDTO;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ruoyi.bpm.controller.definition.vo.model.BpmModelPageReqVO;
+import com.ruoyi.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.StartEvent;
 import org.flowable.bpmn.model.UserTask;
-import org.flowable.common.engine.impl.db.SuspensionState;
+
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.Model;
 import org.flowable.engine.repository.ModelQuery;
@@ -31,11 +21,11 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.yudao.module.bpm.enums.ErrorCodeConstants.*;
+
 
 /**
  * Flowable流程模型实现
@@ -54,34 +44,29 @@ public class BpmModelServiceImpl implements BpmModelService {
     private RepositoryService repositoryService;
     @Resource
     private BpmProcessDefinitionService processDefinitionService;
-    @Resource
-    private BpmFormService bpmFormService;
 
-    @Resource
-    private BpmTaskCandidateInvoker taskCandidateInvoker;
 
     @Override
-    public PageResult<Model> getModelPage(BpmModelPageReqVO pageVO) {
+    public IPage<Model> getModelPage(BpmModelPageReqVO pageVO) {
         ModelQuery modelQuery = repositoryService.createModelQuery();
-        if (StrUtil.isNotBlank(pageVO.getKey())) {
+        if (StringUtils.isNotBlank(pageVO.getKey())) {
             modelQuery.modelKey(pageVO.getKey());
         }
-        if (StrUtil.isNotBlank(pageVO.getName())) {
+        if (StringUtils.isNotBlank(pageVO.getName())) {
             modelQuery.modelNameLike("%" + pageVO.getName() + "%"); // 模糊匹配
         }
-        if (StrUtil.isNotBlank(pageVO.getCategory())) {
+        if (StringUtils.isNotBlank(pageVO.getCategory())) {
             modelQuery.modelCategory(pageVO.getCategory());
         }
         // 执行查询
         long count = modelQuery.count();
         if (count == 0) {
-            return PageResult.empty(count);
+            return new Page<>();
         }
         List<Model> models = modelQuery
-                .modelTenantId(FlowableUtils.getTenantId())
                 .orderByCreateTime().desc()
-                .listPage(PageUtils.getStart(pageVO), pageVO.getPageSize());
-        return new PageResult<>(models, count);
+                .listPage(pageVO.getPageNum(), pageVO.getPageSize());
+        return new Page<>();
     }
 
     @Override
