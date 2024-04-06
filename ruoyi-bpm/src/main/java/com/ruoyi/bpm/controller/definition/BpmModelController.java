@@ -63,11 +63,11 @@ public class BpmModelController extends BaseController {
 //        // 获得 Deployment Map
 //        Set<String> deploymentIds = new HashSet<>();
 //        pageResult.getList().forEach(model -> CollectionUtils.addIfNotNull(deploymentIds, model.getDeploymentId()));
-        Map<String, Deployment> deploymentMap = processDefinitionService.getDeploymentMap(deploymentIds);
-        // 获得 ProcessDefinition Map
-        List<ProcessDefinition> processDefinitions = processDefinitionService.getProcessDefinitionListByDeploymentIds(deploymentIds);
-        Map<String, ProcessDefinition> processDefinitionMap = convertMap(processDefinitions, ProcessDefinition::getDeploymentId);
-        return success(BpmModelConvert.INSTANCE.buildModelPage(pageResult, formMap, categoryMap, deploymentMap, processDefinitionMap));
+//        Map<String, Deployment> deploymentMap = processDefinitionService.getDeploymentMap(deploymentIds);
+//        // 获得 ProcessDefinition Map
+//        List<ProcessDefinition> processDefinitions = processDefinitionService.getProcessDefinitionListByDeploymentIds(deploymentIds);
+//        Map<String, ProcessDefinition> processDefinitionMap = convertMap(processDefinitions, ProcessDefinition::getDeploymentId);
+        return new TableDataInfo(pageResult);
     }
 
     @GetMapping("/get")

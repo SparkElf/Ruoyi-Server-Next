@@ -1,5 +1,6 @@
 package com.ruoyi.common.core.page;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.constant.HttpStatus;
 
@@ -37,6 +38,13 @@ public class TableDataInfo implements Serializable
         setMsg("查询成功");
         setRows(new ArrayList<>());
         setTotal(0);
+    }
+    public TableDataInfo(IPage<?> pageResult)
+    {
+        setCode(HttpStatus.SUCCESS);
+        setMsg("查询成功");
+        setRows(pageResult.getRecords());
+        setTotal(pageResult.getTotal());
     }
 
     /**
