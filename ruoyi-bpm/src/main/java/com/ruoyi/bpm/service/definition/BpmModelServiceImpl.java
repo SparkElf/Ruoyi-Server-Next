@@ -71,7 +71,7 @@ public class BpmModelServiceImpl implements BpmModelService {
         }
         List<Model> models = modelQuery
                 .orderByCreateTime().desc()
-                .listPage(pageVO.getPageNum(), pageVO.getPageSize());
+                .listPage(pageVO.getFirstPage(), pageVO.getPageSize());
         return new Page<Model>().setRecords(models).setTotal(count);
     }
 

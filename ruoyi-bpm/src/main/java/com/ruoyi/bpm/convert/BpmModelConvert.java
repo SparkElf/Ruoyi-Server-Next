@@ -36,7 +36,7 @@ public interface BpmModelConvert {
     default void copy(Model model, BpmModelUpdateReqVO bean) {
         model.setName(bean.getName());
         model.setCategory(bean.getCategory());
-        model.setMetaInfo(new BpmModelMetaInfoRespDTO().copy(bean).toString());
+        model.setMetaInfo(new BpmModelMetaInfoRespDTO(model).copy(bean).toString());
     }
 
 }
