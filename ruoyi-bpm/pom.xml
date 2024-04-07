@@ -14,13 +14,13 @@
     <description>
         bpm模块
     </description>
-
+    <properties>
+        <flowable.version>6.8.0</flowable.version>
+    </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.flowable</groupId>
-            <artifactId>flowable-spring-boot-starter</artifactId>
-            <version>6.3.0</version>
-        </dependency>
+
+
+
 
         <!-- 通用工具-->
         <dependency>
@@ -36,40 +36,49 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-starter-process</artifactId>
+            <version>${flowable.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-starter-actuator</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-autoconfigure</artifactId>
+            <version>${flowable.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- spring-boot-devtools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional> <!-- 表示依赖不会传递 -->
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+
+        <!-- swagger3-->
         <dependency>
             <groupId>io.springfox</groupId>
-            <artifactId>springfox-core</artifactId>
-            <version>3.0.0</version>
-            <scope>compile</scope>
+            <artifactId>springfox-boot-starter</artifactId>
         </dependency>
+
+        <!-- 防止进入swagger页面报类型转换错误，排除3.0.0中的引用，手动增加1.6.2版本 -->
         <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>2.1.2</version>
-            <scope>compile</scope>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>1.6.2</version>
         </dependency>
 
-
+        <!-- Mysql驱动包 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -31,6 +31,7 @@
         <jwt.version>0.9.1</jwt.version>
         <mapstruct-plus.version>1.4.0</mapstruct-plus.version>
         <lombok.version>1.18.20</lombok.version>
+        <springboot.version>2.5.15</springboot.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -55,7 +56,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.5.15</version>
+                <version>${springboot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -88,18 +89,22 @@
                         <artifactId>mybatis</artifactId>
                         <groupId>org.mybatis</groupId>
                     </exclusion>
+                    <exclusion>
+                        <artifactId>jsqlparser</artifactId>
+                        <groupId>com.github.jsqlparser</groupId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>3.5.2</version>
+                <version>3.5.5</version>
             </dependency>
 
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-extension</artifactId>
-                <version>3.5.2</version>
+                <version>3.5.5</version>
                 <scope>compile</scope>
             </dependency>
 
@@ -233,7 +238,7 @@
                         <path>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-configuration-processor</artifactId>
-                            <version>2.7.8</version>
+                            <version>${springboot.version}</version>
                         </path>
                         <!-- Lombok 在编译时会通过这个插件生成代码 -->
                         <path>

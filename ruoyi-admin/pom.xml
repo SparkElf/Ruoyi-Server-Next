@@ -16,7 +16,10 @@
     </description>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-bpm</artifactId>
+        </dependency>
         <!-- spring-boot-devtools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -41,6 +44,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
         </dependency>
 
         <!-- 核心模块-->
@@ -63,7 +67,7 @@
         <dependency>
             <groupId>org.flowable</groupId>
             <artifactId>flowable-spring-boot-autoconfigure</artifactId>
-            <version>6.3.0</version>
+            <version>6.8.0</version>
             <scope>compile</scope>
         </dependency>
 

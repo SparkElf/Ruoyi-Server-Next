@@ -9,8 +9,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  * 
  * @author ruoyi
  */
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class,	org.flowable.spring.boot.RestApiAutoConfiguration.class,
-        	org.flowable.spring.boot.SecurityAutoConfiguration.class})
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class})
+        //org.flowable.spring.boot.RestApiAutoConfiguration.class,
+        	//org.flowable.spring.boot.SecurityAutoConfiguration.class})
 public class RuoYiApplication
 {
     public static void main(String[] args)
