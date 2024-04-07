@@ -1,9 +1,9 @@
 package com.ruoyi.bpm.controller.definition.vo.model;
 
-import cn.iocoder.yudao.framework.common.validation.InEnum;
-import cn.iocoder.yudao.module.bpm.enums.definition.BpmModelFormTypeEnum;
+import com.ruoyi.bpm.service.definition.dto.BpmModelMetaInfoRespDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.flowable.engine.repository.Model;
 import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotEmpty;
@@ -33,7 +33,6 @@ public class BpmModelUpdateReqVO {
     private String bpmnXml;
 
     @Schema(description = "表单类型-参见 bpm_model_form_type 数据字典", example = "1")
-    @InEnum(BpmModelFormTypeEnum.class)
     private Integer formType;
     @Schema(description = "表单编号-在表单类型为 {@link BpmModelFormTypeEnum#CUSTOM} 时，必须非空", example = "1024")
     private Long formId;
@@ -43,5 +42,10 @@ public class BpmModelUpdateReqVO {
     @Schema(description = "自定义表单的查看路径，使用 Vue 的路由地址-在表单类型为 {@link BpmModelFormTypeEnum#CUSTOM} 时，必须非空",
             example = "/bpm/oa/leave/view")
     private String formCustomViewPath;
-
+    public Model copyTo(Model model) {
+        model.setName(getName());
+        model.setCategory(getCategory());
+        model.setMetaInfo(new BpmModelMetaInfoRespDTO(model).copy(this).toString());
+        return model;
+    }
 }

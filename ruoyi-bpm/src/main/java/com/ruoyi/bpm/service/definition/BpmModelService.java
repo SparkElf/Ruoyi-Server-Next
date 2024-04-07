@@ -7,6 +7,7 @@ import com.ruoyi.bpm.controller.definition.vo.model.BpmModelPageReqVO;
 import com.ruoyi.bpm.controller.definition.vo.model.BpmModelUpdateReqVO;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.repository.Model;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
 
@@ -24,15 +25,6 @@ public interface BpmModelService {
      * @return 流程模型分页
      */
     IPage<Model> getModelPage(BpmModelPageReqVO pageVO);
-
-    /**
-     * 创建流程模型
-     *
-     * @param modelVO 创建信息
-     * @param bpmnXml BPMN XML
-     * @return 创建的流程模型的编号
-     */
-    String createModel(@Valid BpmModelCreateReqVO modelVO, String bpmnXml);
 
     /**
      * 获得流程模块
@@ -57,12 +49,15 @@ public interface BpmModelService {
      */
     void updateModel(@Valid BpmModelUpdateReqVO updateReqVO);
 
+    @Transactional(rollbackFor = Exception.class)
+    String createModel(@Valid BpmModelCreateReqVO createReqVO, String bpmnXml);
+
     /**
      * 将流程模型，部署成一个流程定义
      *
      * @param id 编号
      */
-    void deployModel(String id);
+    //void deployModel(String id);
 
     /**
      * 删除模型
@@ -77,7 +72,7 @@ public interface BpmModelService {
      * @param id    编号
      * @param state 状态
      */
-    void updateModelState(String id, Integer state);
+    //void updateModelState(String id, Integer state);
 
     /**
      * 获得流程定义编号对应的 BPMN Model

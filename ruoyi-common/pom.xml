@@ -17,6 +17,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+
+        </dependency>
+        <dependency>
             <groupId>io.github.linpeilie</groupId>
             <artifactId>mapstruct-plus</artifactId>
         </dependency>
@@ -150,6 +155,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
         </dependency>
 
     </dependencies>

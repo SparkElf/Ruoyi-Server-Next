@@ -2,10 +2,10 @@ package com.ruoyi.bpm.controller.definition;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.ruoyi.bpm.controller.definition.vo.model.BpmModelPageReqVO;
-import com.ruoyi.bpm.controller.definition.vo.model.BpmModelRespVO;
+import com.ruoyi.bpm.controller.definition.vo.model.*;
 import com.ruoyi.bpm.service.definition.BpmModelService;
 import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -73,54 +73,54 @@ public class BpmModelController extends BaseController {
     @GetMapping("/get")
     @Operation(summary = "获得模型")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('bpm:model:query')")
-    public CommonResult<BpmModelRespVO> getModel(@RequestParam("id") String id) {
+    @PreAuthorize("@ss.hasPermi('bpm:model:query')")
+    public AjaxResult getModel(@RequestParam("id") String id) {
         Model model = modelService.getModel(id);
         if (model == null) {
             return null;
         }
         byte[] bpmnBytes = modelService.getModelBpmnXML(id);
-        return success(BpmModelConvert.INSTANCE.buildModel(model, bpmnBytes));
+        return success(new BpmModelRespVO(model, bpmnBytes));
     }
 
     @PostMapping("/create")
     @Operation(summary = "新建模型")
-    @PreAuthorize("@ss.hasPermission('bpm:model:create')")
-    public CommonResult<String> createModel(@Valid @RequestBody BpmModelCreateReqVO createRetVO) {
+    @PreAuthorize("@ss.hasPermi('bpm:model:create')")
+    public AjaxResult createModel(@Valid @RequestBody BpmModelCreateReqVO createRetVO) {
         return success(modelService.createModel(createRetVO, null));
     }
 
     @PutMapping("/update")
     @Operation(summary = "修改模型")
-    @PreAuthorize("@ss.hasPermission('bpm:model:update')")
-    public CommonResult<Boolean> updateModel(@Valid @RequestBody BpmModelUpdateReqVO modelVO) {
+    @PreAuthorize("@ss.hasPermi('bpm:model:update')")
+    public AjaxResult updateModel(@Valid @RequestBody BpmModelUpdateReqVO modelVO) {
         modelService.updateModel(modelVO);
         return success(true);
     }
 
 
-    @PostMapping("/deploy")
-    @Operation(summary = "部署模型")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('bpm:model:deploy')")
-    public CommonResult<Boolean> deployModel(@RequestParam("id") String id) {
-        modelService.deployModel(id);
-        return success(true);
-    }
-
-    @PutMapping("/update-state")
-    @Operation(summary = "修改模型的状态", description = "实际更新的部署的流程定义的状态")
-    @PreAuthorize("@ss.hasPermission('bpm:model:update')")
-    public CommonResult<Boolean> updateModelState(@Valid @RequestBody BpmModelUpdateStateReqVO reqVO) {
-        modelService.updateModelState(reqVO.getId(), reqVO.getState());
-        return success(true);
-    }
+//    @PostMapping("/deploy")
+//    @Operation(summary = "部署模型")
+//    @Parameter(name = "id", description = "编号", required = true, example = "1024")
+//    @PreAuthorize("@ss.hasPermi('bpm:model:deploy')")
+//    public AjaxResult deployModel(@RequestParam("id") String id) {
+//        modelService.deployModel(id);
+//        return success(true);
+//    }
+//
+//    @PutMapping("/update-state")
+//    @Operation(summary = "修改模型的状态", description = "实际更新的部署的流程定义的状态")
+//    @PreAuthorize("@ss.hasPermi('bpm:model:update')")
+//    public AjaxResult updateModelState(@Valid @RequestBody BpmModelUpdateStateReqVO reqVO) {
+//        modelService.updateModelState(reqVO.getId(), reqVO.getState());
+//        return success(true);
+//    }
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除模型")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('bpm:model:delete')")
-    public CommonResult<Boolean> deleteModel(@RequestParam("id") String id) {
+    @PreAuthorize("@ss.hasPermi('bpm:model:delete')")
+    public AjaxResult deleteModel(@RequestParam("id") String id) {
         modelService.deleteModel(id);
         return success(true);
     }

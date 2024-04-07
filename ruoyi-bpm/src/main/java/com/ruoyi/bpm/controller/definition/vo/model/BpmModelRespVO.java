@@ -1,13 +1,23 @@
 package com.ruoyi.bpm.controller.definition.vo.model;
 
 
+import com.ruoyi.bpm.service.definition.dto.BpmModelMetaInfoRespDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+import org.flowable.engine.repository.Deployment;
+import org.flowable.engine.repository.Model;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Schema(description = "管理后台 - 流程模型 Response VO")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Accessors(chain = true)
 public class BpmModelRespVO {
 
     @Schema(description = "编号", required=true, example = "1024")
@@ -44,7 +54,7 @@ public class BpmModelRespVO {
     private String formCustomViewPath; // ，使用 Vue 的路由地址-在表单类型为 {@link BpmModelFormTypeEnum#CUSTOM} 时，必须非空
 
     @Schema(description = "创建时间", required=true)
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @Schema(description = "BPMN XML", required=true)
     private String bpmnXml;
@@ -53,5 +63,42 @@ public class BpmModelRespVO {
      * 最新部署的流程定义
      */
 //    private BpmProcessDefinitionRespVO processDefinition;
+    public BpmModelRespVO(Model model,
+                   byte[] bpmnBytes) {
+        this(model, new BpmModelMetaInfoRespDTO(model));
+        if (bpmnBytes.length!=0) {
+            setBpmnXml(new String(bpmnBytes));
+        }
 
+    }
+    public BpmModelRespVO(Model model,
+    BpmModelMetaInfoRespDTO metaInfo) {
+        setId(model.getId());
+        setName(model.getName());
+        setKey(model.getKey());setCategory(model.getCategory());
+        setCreateTime(model.getCreateTime());
+        // Form
+        if (metaInfo != null) {
+            setFormType(metaInfo.getFormType()).setFormId(metaInfo.getFormId())
+                    .setFormCustomCreatePath(metaInfo.getFormCustomCreatePath())
+                    .setFormCustomViewPath(metaInfo.getFormCustomViewPath());
+            setIcon(metaInfo.getIcon()).setDescription(metaInfo.getDescription());
+        }
+//        if (form != null) {
+//            modelRespVO.setFormId(form.getId()).setFormName(form.getName());
+//        }
+//        // Category
+//        if (category != null) {
+//            modelRespVO.setCategoryName(category.getName());
+//        }
+//        // ProcessDefinition
+//        if (processDefinition != null) {
+//            modelRespVO.setProcessDefinition(BeanUtils.toBean(processDefinition, BpmProcessDefinitionRespVO.class));
+//            modelRespVO.getProcessDefinition().setSuspensionState(processDefinition.isSuspended() ?
+//                    SuspensionState.SUSPENDED.getStateCode() : SuspensionState.ACTIVE.getStateCode());
+//            if (deployment != null) {
+//                modelRespVO.getProcessDefinition().setDeploymentTime(DateUtils.of(deployment.getDeploymentTime()));
+//            }
+//        }
+    }
 }
