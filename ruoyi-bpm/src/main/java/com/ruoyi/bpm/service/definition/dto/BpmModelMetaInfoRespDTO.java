@@ -58,24 +58,24 @@ public class BpmModelMetaInfoRespDTO {
         BeanUtils.copyProperties(model.getMetaInfo(),this);
     }
     public BpmModelMetaInfoRespDTO copy(BpmModelUpdateReqVO reqVO){
-        if (StrUtil.isNotEmpty(icon)) {
-            setIcon(icon);
+        if (StrUtil.isNotEmpty(reqVO.getIcon())) {
+            setIcon(reqVO.getIcon());
         }
-        if (StrUtil.isNotEmpty(description)) {
-            setDescription(description);
+        if (StrUtil.isNotEmpty(reqVO.getDescription())) {
+            setDescription(reqVO.getDescription());
         }
-        if (Objects.nonNull(formType)) {
-            setFormType(formType);
-            setFormId(formId);
-            setFormCustomCreatePath(formCustomCreatePath);
-            setFormCustomViewPath(formCustomViewPath);
+        if (Objects.nonNull(reqVO.getFormType())) {
+            setFormType(reqVO.getFormType());
+            setFormId(reqVO.getFormId());
+            setFormCustomCreatePath(reqVO.getFormCustomCreatePath());
+            setFormCustomViewPath(reqVO.getFormCustomViewPath());
         }
         return this;
     }
 
     public BpmModelMetaInfoRespDTO copy(BpmModelCreateReqVO reqVO){
         if (StrUtil.isNotEmpty(reqVO.getDescription())) {
-            setDescription(description);
+            setDescription(reqVO.getDescription());
         }
         return this;
     }

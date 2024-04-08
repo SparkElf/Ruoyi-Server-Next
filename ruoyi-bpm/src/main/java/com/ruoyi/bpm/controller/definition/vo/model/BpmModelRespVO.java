@@ -66,7 +66,7 @@ public class BpmModelRespVO {
     public BpmModelRespVO(Model model,
                    byte[] bpmnBytes) {
         this(model, new BpmModelMetaInfoRespDTO(model));
-        if (bpmnBytes.length!=0) {
+        if (bpmnBytes!=null&&bpmnBytes.length!=0) {
             setBpmnXml(new String(bpmnBytes));
         }
 
