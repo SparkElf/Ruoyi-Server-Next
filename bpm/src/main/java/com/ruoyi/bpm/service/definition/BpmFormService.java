@@ -1,0 +1,89 @@
+package com.ruoyi.service.definition;
+
+
+
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.controller.definition.vo.form.BpmFormPageReqVO;
+import com.ruoyi.controller.definition.vo.form.BpmFormSaveReqVO;
+import com.ruoyi.domain.definition.BpmFormDO;
+
+import javax.validation.Valid;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+/**
+ * 动态表单 Service 接口
+ *
+ * @author  @风里雾里
+ */
+public interface BpmFormService {
+
+    /**
+     * 创建动态表单
+     *
+     * @param createReqVO 创建信息
+     * @return 编号
+     */
+    Long createForm(@Valid BpmFormSaveReqVO createReqVO);
+
+    /**
+     * 更新动态表单
+     *
+     * @param updateReqVO 更新信息
+     */
+    void updateForm(@Valid BpmFormSaveReqVO updateReqVO);
+
+    /**
+     * 删除动态表单
+     *
+     * @param id 编号
+     */
+    void deleteForm(Long id);
+
+    /**
+     * 获得动态表单
+     *
+     * @param id 编号
+     * @return 动态表单
+     */
+    BpmFormDO getForm(Long id);
+
+    /**
+     * 获得动态表单列表
+     *
+     * @return 动态表单列表
+     */
+    List<BpmFormDO> getFormList();
+
+    /**
+     * 获得动态表单列表
+     *
+     * @param ids 编号
+     * @return 动态表单列表
+     */
+    List<BpmFormDO> getFormList(Collection<Long> ids);
+
+    /**
+     * 获得动态表单 Map
+     *
+     * @param ids 编号
+     * @return 动态表单 Map
+     */
+    default Map<Long, BpmFormDO> getFormMap(Collection<Long> ids) {
+        return CollUtil.toMap(this.getFormList(ids),new HashMap<>() ,BpmFormDO::getId);
+    }
+
+    /**
+     * 获得动态表单分页
+     *
+     * @param pageReqVO 分页查询
+     * @return 动态表单分页
+     */
+    TableDataInfo getFormPage(BpmFormPageReqVO pageReqVO);
+
+}
