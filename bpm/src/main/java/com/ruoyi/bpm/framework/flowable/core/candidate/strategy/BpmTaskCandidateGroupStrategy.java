@@ -1,10 +1,11 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.strategy;
+package com.ruoyi.bpm.framework.flowable.core.candidate.strategy;
 
-import cn.iocoder.yudao.framework.common.util.string.StrUtils;
-import cn.iocoder.yudao.module.bpm.dal.dataobject.definition.BpmUserGroupDO;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.enums.BpmTaskCandidateStrategyEnum;
-import cn.iocoder.yudao.module.bpm.service.definition.BpmUserGroupService;
+
+import com.ruoyi.bpm.domain.definition.BpmUserGroupDO;
+import com.ruoyi.bpm.enums.task.BpmTaskCandidateStrategyEnum;
+import com.ruoyi.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
+import com.ruoyi.bpm.service.definition.BpmUserGroupService;
+import com.ruoyi.common.utils.StrUtils;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertSetByFlatMap;
+import static com.ruoyi.common.utils.CollectionUtils.convertSetByFlatMap;
+
 
 /**
  * 用户组 {@link BpmTaskCandidateStrategy} 实现类

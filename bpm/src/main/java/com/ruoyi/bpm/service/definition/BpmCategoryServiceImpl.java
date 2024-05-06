@@ -1,14 +1,14 @@
-package com.ruoyi.service.definition;
+package com.ruoyi.bpm.service.definition;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjUtil;
 
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.object.BeanUtils;
-import com.ruoyi.controller.definition.vo.category.BpmCategoryPageReqVO;
-import com.ruoyi.controller.definition.vo.category.BpmCategorySaveReqVO;
-import com.ruoyi.domain.definition.BpmCategoryDO;
-import com.ruoyi.mapper.category.BpmCategoryMapper;
+import com.ruoyi.bpm.controller.definition.vo.category.BpmCategoryPageReqVO;
+import com.ruoyi.bpm.controller.definition.vo.category.BpmCategorySaveReqVO;
+import com.ruoyi.bpm.domain.definition.BpmCategoryDO;
+import com.ruoyi.bpm.mapper.category.BpmCategoryMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -17,8 +17,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static com.ruoyi.enums.ErrorCodeConstants.*;
-import static com.ruoyi.utils.exception.util.ServiceExceptionUtil.exception;
+import static com.ruoyi.bpm.enums.ErrorCodeConstants.*;
+import static com.ruoyi.common.exception.ServiceExceptionUtil.exception;
 
 
 /**

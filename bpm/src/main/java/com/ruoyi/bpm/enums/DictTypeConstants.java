@@ -1,4 +1,4 @@
-package com.ruoyi.enums;
+package com.ruoyi.bpm.enums;
 
 /**
  * BPM 字典类型的枚举类

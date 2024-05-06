@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.bpm.api.task.dto;
+package com.ruoyi.bpm.service.task.dto;
 
 import lombok.Data;
 

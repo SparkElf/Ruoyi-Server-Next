@@ -1,6 +1,10 @@
 package com.ruoyi.system.service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import com.ruoyi.common.core.domain.entity.SysUser;
 
 /**
@@ -10,6 +14,14 @@ import com.ruoyi.common.core.domain.entity.SysUser;
  */
 public interface ISysUserService
 {
+    List<SysUser> selectUserByIds(Collection<Long> ids);
+
+    List<SysUser> getUserListByPostIds(Set<Long> postIds);
+    List<SysUser> getUserListByDeptIds(Set<Long> deptIds);
+
+    void validateUserList(Collection<Long> ids);
+
+    public Map<Long,SysUser> getUserMap(Collection<Long> userIds);
     /**
      * 根据条件分页查询用户列表
      * 

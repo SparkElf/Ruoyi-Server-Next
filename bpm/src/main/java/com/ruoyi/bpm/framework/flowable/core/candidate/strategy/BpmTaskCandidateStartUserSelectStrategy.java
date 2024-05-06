@@ -1,12 +1,13 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.strategy;
+package com.ruoyi.bpm.framework.flowable.core.candidate.strategy;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.enums.BpmTaskCandidateStrategyEnum;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.util.BpmnModelUtils;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.util.FlowableUtils;
-import cn.iocoder.yudao.module.bpm.service.task.BpmProcessInstanceService;
+
+import com.ruoyi.bpm.enums.task.BpmTaskCandidateStrategyEnum;
+import com.ruoyi.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
+import com.ruoyi.bpm.framework.flowable.core.util.BpmnModelUtils;
+import com.ruoyi.bpm.framework.flowable.core.util.FlowableUtils;
+import com.ruoyi.bpm.service.task.BpmProcessInstanceService;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.UserTask;
 import org.flowable.engine.delegate.DelegateExecution;

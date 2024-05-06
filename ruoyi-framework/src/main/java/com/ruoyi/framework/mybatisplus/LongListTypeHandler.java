@@ -1,7 +1,8 @@
-package cn.iocoder.yudao.framework.mybatis.core.type;
+package com.ruoyi.framework.mybatisplus;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.iocoder.yudao.framework.common.util.string.StrUtils;
+
+import com.ruoyi.common.utils.StrUtils;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;

@@ -1,6 +1,8 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.util;
+package com.ruoyi.bpm.framework.flowable.core.util;
 
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.enums.BpmConstants;
+
+import com.ruoyi.bpm.enums.BpmnModelConstants;
+
 import org.flowable.common.engine.api.delegate.Expression;
 import org.flowable.common.engine.api.variable.VariableContainer;
 import org.flowable.common.engine.impl.el.ExpressionManager;
@@ -71,7 +73,7 @@ public class FlowableUtils {
      * @return 状态
      */
     private static Integer getProcessInstanceStatus(Map<String, Object> processVariables) {
-        return (Integer) processVariables.get(BpmConstants.PROCESS_INSTANCE_VARIABLE_STATUS);
+        return (Integer) processVariables.get(BpmnModelConstants.PROCESS_INSTANCE_VARIABLE_STATUS);
     }
 
     /**
@@ -95,7 +97,7 @@ public class FlowableUtils {
      * @return 过滤后的表单
      */
     public static Map<String, Object> filterProcessInstanceFormVariable(Map<String, Object> processVariables) {
-        processVariables.remove(BpmConstants.PROCESS_INSTANCE_VARIABLE_STATUS);
+        processVariables.remove(BpmnModelConstants.PROCESS_INSTANCE_VARIABLE_STATUS);
         return processVariables;
     }
 
@@ -108,7 +110,7 @@ public class FlowableUtils {
     @SuppressWarnings("unchecked")
     public static Map<String, List<Long>> getStartUserSelectAssignees(ProcessInstance processInstance) {
         return (Map<String, List<Long>>) processInstance.getProcessVariables().get(
-                BpmConstants.PROCESS_INSTANCE_VARIABLE_START_USER_SELECT_ASSIGNEES);
+                BpmnModelConstants.PROCESS_INSTANCE_VARIABLE_START_USER_SELECT_ASSIGNEES);
     }
 
     // ========== Task 相关的工具方法 ==========
@@ -120,7 +122,7 @@ public class FlowableUtils {
      * @return 状态
      */
     public static Integer getTaskStatus(TaskInfo task) {
-        return (Integer) task.getTaskLocalVariables().get(BpmConstants.TASK_VARIABLE_STATUS);
+        return (Integer) task.getTaskLocalVariables().get(BpmnModelConstants.TASK_VARIABLE_STATUS);
     }
 
     /**
@@ -130,7 +132,7 @@ public class FlowableUtils {
      * @return 审批原因
      */
     public static String getTaskReason(TaskInfo task) {
-        return (String) task.getTaskLocalVariables().get(BpmConstants.TASK_VARIABLE_REASON);
+        return (String) task.getTaskLocalVariables().get(BpmnModelConstants.TASK_VARIABLE_REASON);
     }
 
     /**
@@ -154,8 +156,8 @@ public class FlowableUtils {
      * @return 过滤后的表单
      */
     public static Map<String, Object> filterTaskFormVariable(Map<String, Object> taskLocalVariables) {
-        taskLocalVariables.remove(BpmConstants.TASK_VARIABLE_STATUS);
-        taskLocalVariables.remove(BpmConstants.TASK_VARIABLE_REASON);
+        taskLocalVariables.remove(BpmnModelConstants.TASK_VARIABLE_STATUS);
+        taskLocalVariables.remove(BpmnModelConstants.TASK_VARIABLE_REASON);
         return taskLocalVariables;
     }
 

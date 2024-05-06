@@ -1,10 +1,11 @@
 package com.ruoyi.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.ruoyi.common.enums.CommonStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,11 @@ import com.ruoyi.system.mapper.SysRoleMenuMapper;
 import com.ruoyi.system.mapper.SysUserRoleMapper;
 import com.ruoyi.system.service.ISysRoleService;
 
+import static com.ruoyi.common.exception.ErrorCodeConstants.ROLE_IS_DISABLE;
+import static com.ruoyi.common.exception.ErrorCodeConstants.ROLE_NOT_EXISTS;
+import static com.ruoyi.common.exception.ServiceExceptionUtil.exception;
+import static com.ruoyi.common.utils.CollectionUtils.convertMap;
+
 /**
  * 角色 业务层处理
  * 
@@ -44,6 +50,29 @@ public class SysRoleServiceImpl implements ISysRoleService
 
     @Autowired
     private SysRoleDeptMapper roleDeptMapper;
+
+    public Set<Long> getUserRoleIdListByRoleIds(Collection<Long> roleIds){
+        return userRoleMapper.selectList(new LambdaQueryWrapper<SysUserRole>().in(SysUserRole::getRoleId,roleIds)).stream().map(SysUserRole::getRoleId).collect(Collectors.toSet());
+    }
+    @Override
+    public void validateRoleList(Collection<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return;
+        }
+        // 获得角色信息
+        List<SysRole> roles = roleMapper.selectBatchIds(ids);
+        Map<Long, SysRole> roleMap = convertMap(roles, SysRole::getRoleId);
+        // 校验
+        ids.forEach(id -> {
+            SysRole role = roleMap.get(id);
+            if (role == null) {
+                throw exception(ROLE_NOT_EXISTS);
+            }
+            if (!CommonStatusEnum.ENABLE.getStatus().equals(role.getStatus())) {
+                throw exception(ROLE_IS_DISABLE, role.getRoleName());
+            }
+        });
+    }
 
     /**
      * 根据条件分页查询角色数据

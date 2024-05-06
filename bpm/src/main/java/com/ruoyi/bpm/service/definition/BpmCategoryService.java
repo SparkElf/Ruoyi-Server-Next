@@ -1,11 +1,11 @@
-package com.ruoyi.service.definition;
+package com.ruoyi.bpm.service.definition;
 
 
 
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.controller.definition.vo.category.BpmCategoryPageReqVO;
-import com.ruoyi.controller.definition.vo.category.BpmCategorySaveReqVO;
-import com.ruoyi.domain.definition.BpmCategoryDO;
+import com.ruoyi.bpm.controller.definition.vo.category.BpmCategoryPageReqVO;
+import com.ruoyi.bpm.controller.definition.vo.category.BpmCategorySaveReqVO;
+import com.ruoyi.bpm.domain.definition.BpmCategoryDO;
 
 import javax.validation.Valid;
 import java.util.Collection;

@@ -1,11 +1,11 @@
-package com.ruoyi.service.definition;
+package com.ruoyi.bpm.service.definition;
 
 
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.controller.definition.vo.process.BpmProcessDefinitionPageReqVO;
-import com.ruoyi.domain.definition.BpmFormDO;
-import com.ruoyi.domain.definition.BpmProcessDefinitionInfoDO;
-import com.ruoyi.service.definition.dto.BpmModelMetaInfoRespDTO;
+import com.ruoyi.bpm.controller.definition.vo.process.BpmProcessDefinitionPageReqVO;
+import com.ruoyi.bpm.domain.definition.BpmFormDO;
+import com.ruoyi.bpm.domain.definition.BpmProcessDefinitionInfoDO;
+import com.ruoyi.bpm.service.definition.dto.BpmModelMetaInfoRespDTO;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.Model;

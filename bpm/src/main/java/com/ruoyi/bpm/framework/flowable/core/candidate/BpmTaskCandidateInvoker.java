@@ -1,14 +1,14 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate;
+package com.ruoyi.bpm.framework.flowable.core.candidate;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
-import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.enums.BpmTaskCandidateStrategyEnum;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.util.BpmnModelUtils;
-import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
-import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
-import com.google.common.annotations.VisibleForTesting;
+
+import com.ruoyi.common.enums.CommonStatusEnum;
+import com.ruoyi.bpm.enums.task.BpmTaskCandidateStrategyEnum;
+import com.ruoyi.bpm.framework.flowable.core.util.BpmnModelUtils;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.system.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.UserTask;
@@ -19,9 +19,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.yudao.module.bpm.enums.ErrorCodeConstants.MODEL_DEPLOY_FAIL_TASK_CANDIDATE_NOT_CONFIG;
-import static cn.iocoder.yudao.module.bpm.enums.ErrorCodeConstants.TASK_CREATE_FAIL_NO_CANDIDATE_USER;
+import static com.ruoyi.bpm.enums.ErrorCodeConstants.MODEL_DEPLOY_FAIL_TASK_CANDIDATE_NOT_CONFIG;
+import static com.ruoyi.bpm.enums.ErrorCodeConstants.TASK_CREATE_FAIL_NO_CANDIDATE_USER;
+import static com.ruoyi.common.exception.ServiceExceptionUtil.exception;
+
 
 /**
  * {@link BpmTaskCandidateStrategy} 的调用者，用于调用对应的策略，实现任务的候选人的计算
@@ -33,15 +34,15 @@ public class BpmTaskCandidateInvoker {
 
     private final Map<BpmTaskCandidateStrategyEnum, BpmTaskCandidateStrategy> strategyMap = new HashMap<>();
 
-    private final AdminUserApi adminUserApi;
+    private final ISysUserService userApi;
 
     public BpmTaskCandidateInvoker(List<BpmTaskCandidateStrategy> strategyList,
-                                   AdminUserApi adminUserApi) {
+                                   ISysUserService userApi) {
         strategyList.forEach(strategy -> {
             BpmTaskCandidateStrategy oldStrategy = strategyMap.put(strategy.getStrategy(), strategy);
             Assert.isNull(oldStrategy, "策略(%s) 重复", strategy.getStrategy());
         });
-        this.adminUserApi = adminUserApi;
+        this.userApi = userApi;
     }
 
     /**
@@ -94,14 +95,14 @@ public class BpmTaskCandidateInvoker {
         return userIds;
     }
 
-    @VisibleForTesting
+
     void removeDisableUsers(Set<Long> assigneeUserIds) {
         if (CollUtil.isEmpty(assigneeUserIds)) {
             return;
         }
-        Map<Long, AdminUserRespDTO> userMap = adminUserApi.getUserMap(assigneeUserIds);
+        Map<Long, SysUser> userMap = userApi.getUserMap(assigneeUserIds);
         assigneeUserIds.removeIf(id -> {
-            AdminUserRespDTO user = userMap.get(id);
+            SysUser user = userMap.get(id);
             return user == null || !CommonStatusEnum.ENABLE.getStatus().equals(user.getStatus());
         });
     }

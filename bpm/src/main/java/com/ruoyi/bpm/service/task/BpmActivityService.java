@@ -1,6 +1,6 @@
-package cn.iocoder.yudao.module.bpm.service.task;
+package com.ruoyi.bpm.service.task;
 
-import cn.iocoder.yudao.module.bpm.controller.admin.task.vo.activity.BpmActivityRespVO;
+import com.ruoyi.bpm.controller.task.vo.activity.BpmActivityRespVO;
 import org.flowable.engine.history.HistoricActivityInstance;
 
 import java.util.List;

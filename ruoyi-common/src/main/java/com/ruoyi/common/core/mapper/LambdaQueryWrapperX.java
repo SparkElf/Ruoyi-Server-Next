@@ -1,8 +1,8 @@
-package cn.iocoder.yudao.framework.mybatis.core.query;
+package com.ruoyi.common.core.mapper;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.iocoder.yudao.framework.common.util.collection.ArrayUtils;
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import org.springframework.util.StringUtils;
@@ -95,8 +95,9 @@ public class LambdaQueryWrapperX<T> extends LambdaQueryWrapper<T> {
     }
 
     public LambdaQueryWrapperX<T> betweenIfPresent(SFunction<T, ?> column, Object[] values) {
-        Object val1 = ArrayUtils.get(values, 0);
-        Object val2 = ArrayUtils.get(values, 1);
+        if(ObjectUtil.isEmpty(values))return this;
+        Object val1 = values[0];
+        Object val2 = values[1];
         return betweenIfPresent(column, val1, val2);
     }
 

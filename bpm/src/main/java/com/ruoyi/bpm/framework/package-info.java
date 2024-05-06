@@ -3,4 +3,4 @@
  *
  * @author 芋道源码
  */
-package cn.iocoder.yudao.module.bpm.framework;
+package com.ruoyi.bpm.framework;

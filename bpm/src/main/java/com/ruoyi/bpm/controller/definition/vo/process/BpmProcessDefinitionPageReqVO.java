@@ -1,4 +1,4 @@
-package com.ruoyi.controller.definition.vo.process;
+package com.ruoyi.bpm.controller.definition.vo.process;
 
 
 import com.ruoyi.common.core.domain.PageParam;

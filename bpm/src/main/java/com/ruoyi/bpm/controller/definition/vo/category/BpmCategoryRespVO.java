@@ -1,12 +1,14 @@
-package com.ruoyi.controller.definition.vo.category;
+package com.ruoyi.bpm.controller.definition.vo.category;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - BPM 流程分类 Response VO")
 @Data
+@Accessors(chain = true)
 public class BpmCategoryRespVO {
 
     @Schema(description = "分类编号", required = true, example = "3167")

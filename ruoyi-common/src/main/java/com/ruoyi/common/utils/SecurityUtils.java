@@ -20,7 +20,18 @@ import com.ruoyi.common.exception.ServiceException;
  */
 public class SecurityUtils
 {
-
+    public static LoginUser getLoginUserSafe()
+    {
+        Authentication authentication = getAuthentication();
+        if (authentication != null) {
+            var user=authentication.getPrincipal();
+            if(user instanceof LoginUser){
+                return (LoginUser) authentication.getPrincipal();
+            }
+            else return null;
+        }
+        return null;
+    }
     /**
      * 用户ID
      **/

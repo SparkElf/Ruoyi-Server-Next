@@ -1,6 +1,6 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.behavior;
+package com.ruoyi.bpm.framework.flowable.core.behavior;
 
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.BpmTaskCandidateInvoker;
+import com.ruoyi.bpm.framework.flowable.core.candidate.BpmTaskCandidateInvoker;
 import lombok.Setter;
 import org.flowable.bpmn.model.Activity;
 import org.flowable.bpmn.model.UserTask;

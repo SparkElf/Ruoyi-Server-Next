@@ -1,4 +1,4 @@
-package com.ruoyi.service.definition.dto;
+package com.ruoyi.bpm.service.definition.dto;
 
 
 import lombok.Data;

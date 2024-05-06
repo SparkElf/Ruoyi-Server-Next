@@ -1,4 +1,4 @@
-package com.ruoyi.mapper.category;
+package com.ruoyi.bpm.mapper.category;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -7,8 +7,8 @@ import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.core.mapper.LambdaQueryWrapperX;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.PageUtils;
-import com.ruoyi.controller.definition.vo.category.BpmCategoryPageReqVO;
-import com.ruoyi.domain.definition.BpmCategoryDO;
+import com.ruoyi.bpm.controller.definition.vo.category.BpmCategoryPageReqVO;
+import com.ruoyi.bpm.domain.definition.BpmCategoryDO;
 
 import icu.mhb.mybatisplus.plugln.base.mapper.JoinBaseMapper;
 import org.apache.ibatis.annotations.Mapper;

@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.framework.common.util.validation;
+package com.ruoyi.common.utils;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;

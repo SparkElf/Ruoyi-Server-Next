@@ -1,4 +1,4 @@
-package com.ruoyi.controller.definition.vo.expression;
+package com.ruoyi.bpm.controller.definition.vo.expression;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;

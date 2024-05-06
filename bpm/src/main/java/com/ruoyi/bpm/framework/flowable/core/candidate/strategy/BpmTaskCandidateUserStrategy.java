@@ -1,9 +1,10 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.strategy;
+package com.ruoyi.bpm.framework.flowable.core.candidate.strategy;
 
-import cn.iocoder.yudao.framework.common.util.string.StrUtils;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.enums.BpmTaskCandidateStrategyEnum;
-import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
+
+import com.ruoyi.bpm.enums.task.BpmTaskCandidateStrategyEnum;
+import com.ruoyi.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
+import com.ruoyi.common.utils.StrUtils;
+import com.ruoyi.system.service.ISysUserService;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,7 @@ import java.util.Set;
 public class BpmTaskCandidateUserStrategy implements BpmTaskCandidateStrategy {
 
     @Resource
-    private AdminUserApi adminUserApi;
+    private ISysUserService userApi;
 
     @Override
     public BpmTaskCandidateStrategyEnum getStrategy() {
@@ -28,7 +29,7 @@ public class BpmTaskCandidateUserStrategy implements BpmTaskCandidateStrategy {
 
     @Override
     public void validateParam(String param) {
-        adminUserApi.validateUserList(StrUtils.splitToLongSet(param));
+        userApi.validateUserList(StrUtils.splitToLongSet(param));
     }
 
     @Override

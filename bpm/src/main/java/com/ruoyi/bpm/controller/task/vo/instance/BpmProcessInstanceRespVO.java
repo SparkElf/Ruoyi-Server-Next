@@ -1,6 +1,6 @@
-package cn.iocoder.yudao.module.bpm.controller.admin.task.vo.instance;
+package com.ruoyi.bpm.controller.task.vo.instance;
 
-import cn.iocoder.yudao.module.bpm.controller.admin.definition.vo.process.BpmProcessDefinitionRespVO;
+import com.ruoyi.bpm.controller.definition.vo.process.BpmProcessDefinitionRespVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -12,30 +12,30 @@ import java.util.Map;
 @Data
 public class BpmProcessInstanceRespVO {
 
-    @Schema(description = "流程实例的编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
+    @Schema(description = "流程实例的编号", required=true, example = "1024")
     private String id;
 
-    @Schema(description = "流程名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "芋道")
+    @Schema(description = "流程名称", required=true, example = "芋道")
     private String name;
 
-    @Schema(description = "流程分类", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+    @Schema(description = "流程分类", required=true, example = "1")
     private String category;
-    @Schema(description = "流程分类名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "请假")
+    @Schema(description = "流程分类名称", required=true, example = "请假")
     private String categoryName;
 
-    @Schema(description = "流程实例的状态", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+    @Schema(description = "流程实例的状态", required=true, example = "1")
     private Integer status; // 参见 BpmProcessInstanceStatusEnum 枚举
 
-    @Schema(description = "发起时间", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "发起时间", required=true)
     private LocalDateTime startTime;
 
-    @Schema(description = "结束时间", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "结束时间", required=true)
     private LocalDateTime endTime;
 
     @Schema(description = "持续时间", example = "1000")
     private Long durationInMillis;
 
-    @Schema(description = "提交的表单值", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "提交的表单值", required=true)
     private Map<String, Object> formVariables;
 
     @Schema(description = "业务的唯一标识-例如说，请假申请的编号", example = "1")
@@ -46,7 +46,7 @@ public class BpmProcessInstanceRespVO {
      */
     private User startUser;
 
-    @Schema(description = "流程定义的编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "2048")
+    @Schema(description = "流程定义的编号", required=true, example = "2048")
     private String processDefinitionId;
     /**
      * 流程定义
@@ -62,14 +62,14 @@ public class BpmProcessInstanceRespVO {
     @Data
     public static class User {
 
-        @Schema(description = "用户编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+        @Schema(description = "用户编号", required=true, example = "1")
         private Long id;
-        @Schema(description = "用户昵称", requiredMode = Schema.RequiredMode.REQUIRED, example = "芋艿")
+        @Schema(description = "用户昵称", required=true, example = "芋艿")
         private String nickname;
 
-        @Schema(description = "部门编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+        @Schema(description = "部门编号", required=true, example = "1")
         private Long deptId;
-        @Schema(description = "部门名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "研发部")
+        @Schema(description = "部门名称", required=true, example = "研发部")
         private String deptName;
 
     }
@@ -78,10 +78,10 @@ public class BpmProcessInstanceRespVO {
     @Data
     public static class Task {
 
-        @Schema(description = "流程任务的编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
+        @Schema(description = "流程任务的编号", required=true, example = "1024")
         private String id;
 
-        @Schema(description = "任务名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "芋道")
+        @Schema(description = "任务名称", required=true, example = "芋道")
         private String name;
 
     }

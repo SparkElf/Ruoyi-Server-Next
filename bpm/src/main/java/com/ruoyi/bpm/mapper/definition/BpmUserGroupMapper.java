@@ -1,4 +1,4 @@
-package com.ruoyi.mapper.definition;
+package com.ruoyi.bpm.mapper.definition;
 
 import cn.hutool.core.util.StrUtil;
 
@@ -7,10 +7,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.PageUtils;
-import com.ruoyi.controller.definition.vo.group.BpmUserGroupPageReqVO;
-import com.ruoyi.controller.definition.vo.listener.BpmProcessListenerPageReqVO;
-import com.ruoyi.domain.definition.BpmProcessListenerDO;
-import com.ruoyi.domain.definition.BpmUserGroupDO;
+import com.ruoyi.bpm.controller.definition.vo.group.BpmUserGroupPageReqVO;
+import com.ruoyi.bpm.domain.definition.BpmUserGroupDO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

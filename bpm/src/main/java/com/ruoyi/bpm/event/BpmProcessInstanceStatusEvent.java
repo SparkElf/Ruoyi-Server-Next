@@ -1,6 +1,7 @@
-package cn.iocoder.yudao.module.bpm.event;
+package com.ruoyi.bpm.event;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.springframework.context.ApplicationEvent;
 
 import javax.validation.constraints.NotNull;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
  */
 @SuppressWarnings("ALL")
 @Data
+@Accessors(chain = true)
 public class BpmProcessInstanceStatusEvent extends ApplicationEvent {
 
     /**

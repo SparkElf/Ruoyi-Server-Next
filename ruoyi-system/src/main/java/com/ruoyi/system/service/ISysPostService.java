@@ -1,5 +1,6 @@
 package com.ruoyi.system.service;
 
+import java.util.Collection;
 import java.util.List;
 import com.ruoyi.system.domain.SysPost;
 
@@ -10,6 +11,8 @@ import com.ruoyi.system.domain.SysPost;
  */
 public interface ISysPostService
 {
+    void validatePostList(Collection<Long> ids);
+
     /**
      * 查询岗位信息集合
      * 

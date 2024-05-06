@@ -1,14 +1,18 @@
-package com.ruoyi.service.definition;
+package com.ruoyi.bpm.service.definition;
 
 import cn.hutool.core.util.StrUtil;
 
+import com.ruoyi.bpm.enums.definition.BpmModelFormTypeEnum;
+import com.ruoyi.bpm.framework.flowable.core.candidate.BpmTaskCandidateInvoker;
+import com.ruoyi.bpm.framework.flowable.core.util.BpmnModelUtils;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.JsonUtils;
-import com.ruoyi.controller.definition.vo.model.BpmModelCreateReqVO;
-import com.ruoyi.controller.definition.vo.model.BpmModelPageReqVO;
-import com.ruoyi.controller.definition.vo.model.BpmModelUpdateReqVO;
-import com.ruoyi.domain.definition.BpmFormDO;
-import com.ruoyi.service.definition.dto.BpmModelMetaInfoRespDTO;
+import com.ruoyi.bpm.controller.definition.vo.model.BpmModelCreateReqVO;
+import com.ruoyi.bpm.controller.definition.vo.model.BpmModelPageReqVO;
+import com.ruoyi.bpm.controller.definition.vo.model.BpmModelUpdateReqVO;
+import com.ruoyi.bpm.domain.definition.BpmFormDO;
+import com.ruoyi.bpm.service.definition.dto.BpmModelMetaInfoRespDTO;
+import com.ruoyi.common.utils.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.StartEvent;
@@ -28,8 +32,9 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
-import static com.ruoyi.enums.ErrorCodeConstants.*;
-import static com.ruoyi.utils.exception.util.ServiceExceptionUtil.exception;
+import static com.ruoyi.bpm.enums.ErrorCodeConstants.*;
+
+import static com.ruoyi.common.exception.ServiceExceptionUtil.exception;
 
 /**
  * Flowable流程模型实现
@@ -91,7 +96,7 @@ public class BpmModelServiceImpl implements BpmModelService {
 
         // 创建流程定义
         Model model = repositoryService.newModel();
-        BpmModelConvert.INSTANCE.copyToCreateModel(model, createReqVO);
+        createReqVO.copyTo(model );
 
         // 保存流程定义
         repositoryService.saveModel(model);
@@ -110,7 +115,7 @@ public class BpmModelServiceImpl implements BpmModelService {
         }
 
         // 修改流程定义
-        BpmModelConvert.INSTANCE.copyToUpdateModel(model, updateReqVO);
+        updateReqVO.copyTo(model);
         // 更新模型
         repositoryService.saveModel(model);
         // 更新 BPMN XML

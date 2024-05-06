@@ -1,10 +1,15 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.behavior;
+package com.ruoyi.bpm.framework.flowable.core.behavior;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.RandomUtil;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.BpmTaskCandidateInvoker;
+
+import com.ruoyi.bpm.framework.flowable.core.candidate.BpmTaskCandidateInvoker;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.model.UserTask;
 import org.flowable.common.engine.impl.el.ExpressionManager;
@@ -26,10 +31,16 @@ import java.util.Set;
  * @author 芋道源码
  */
 @Slf4j
+
 public class BpmUserTaskActivityBehavior extends UserTaskActivityBehavior {
 
-    @Setter
+
     private BpmTaskCandidateInvoker taskCandidateInvoker;
+
+    public BpmUserTaskActivityBehavior setTaskCandidateInvoker(BpmTaskCandidateInvoker taskCandidateInvoker) {
+        this.taskCandidateInvoker = taskCandidateInvoker;
+        return this;
+    }
 
     public BpmUserTaskActivityBehavior(UserTask userTask) {
         super(userTask);

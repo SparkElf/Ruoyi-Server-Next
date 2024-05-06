@@ -1,13 +1,16 @@
-package cn.iocoder.yudao.module.bpm.service.definition;
+package com.ruoyi.bpm.service.definition;
 
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.module.bpm.controller.admin.definition.vo.group.BpmUserGroupPageReqVO;
-import cn.iocoder.yudao.module.bpm.controller.admin.definition.vo.group.BpmUserGroupSaveReqVO;
-import cn.iocoder.yudao.module.bpm.dal.dataobject.definition.BpmUserGroupDO;
+
+
+import com.ruoyi.bpm.controller.definition.vo.group.BpmUserGroupPageReqVO;
+import com.ruoyi.bpm.controller.definition.vo.group.BpmUserGroupSaveReqVO;
+import com.ruoyi.bpm.domain.definition.BpmUserGroupDO;
+import com.ruoyi.common.core.page.TableDataInfo;
 
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
+
 
 /**
  * 用户组 Service 接口
@@ -68,7 +71,7 @@ public interface BpmUserGroupService {
      * @param pageReqVO 分页查询
      * @return 用户组分页
      */
-    PageResult<BpmUserGroupDO> getUserGroupPage(BpmUserGroupPageReqVO pageReqVO);
+    TableDataInfo getUserGroupPage(BpmUserGroupPageReqVO pageReqVO);
 
     /**
      * 校验用户组们是否有效。如下情况，视为无效：

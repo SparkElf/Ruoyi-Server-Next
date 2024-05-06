@@ -1,4 +1,4 @@
-package com.ruoyi.bpm.framework.flowable.core.enums;
+package com.ruoyi.bpm.enums.task;
 
 import cn.hutool.core.util.ArrayUtil;
 import lombok.AllArgsConstructor;

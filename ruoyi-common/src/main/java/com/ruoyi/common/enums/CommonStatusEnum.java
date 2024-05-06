@@ -1,4 +1,4 @@
-package com.ruoyi.bpm.enums;
+package com.ruoyi.common.enums;
 
 import cn.hutool.core.util.ObjUtil;
 

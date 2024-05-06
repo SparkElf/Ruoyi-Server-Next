@@ -11,7 +11,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  */
 @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class ,
         org.flowable.spring.boot.RestApiAutoConfiguration.class,
-        org.flowable.spring.boot.FlowableSecurityAutoConfiguration.class})
+        org.flowable.spring.boot.FlowableSecurityAutoConfiguration.class},
+        scanBasePackages = {"com.ruoyi"}
+)
 public class RuoYiApplication
 {
     public static void main(String[] args)

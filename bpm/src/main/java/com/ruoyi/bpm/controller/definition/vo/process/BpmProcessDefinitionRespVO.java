@@ -1,9 +1,10 @@
-package com.ruoyi.controller.definition.vo.process;
+package com.ruoyi.bpm.controller.definition.vo.process;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Schema(description = "管理后台 - 流程定义 Response VO")
@@ -54,7 +55,7 @@ public class BpmProcessDefinitionRespVO {
     private Integer suspensionState; // 参见 SuspensionState 枚举
 
     @Schema(description = "部署时间")
-    private LocalDateTime deploymentTime; // 需要从对应的 Deployment 读取，非必须返回
+    private Date deploymentTime; // 需要从对应的 Deployment 读取，非必须返回
 
     @Schema(description = "BPMN XML")
     private String bpmnXml; // 需要从对应的 BpmnModel 读取，非必须返回

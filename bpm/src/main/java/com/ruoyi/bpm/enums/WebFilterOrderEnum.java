@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.framework.common.enums;
+package com.ruoyi.bpm.enums;
 
 /**
  * Web 过滤器顺序的枚举类，保证过滤器按照符合我们的预期

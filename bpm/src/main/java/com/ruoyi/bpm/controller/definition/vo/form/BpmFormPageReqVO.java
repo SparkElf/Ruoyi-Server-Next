@@ -1,4 +1,4 @@
-package com.ruoyi.controller.definition.vo.form;
+package com.ruoyi.bpm.controller.definition.vo.form;
 
 
 import com.ruoyi.common.core.domain.PageParam;

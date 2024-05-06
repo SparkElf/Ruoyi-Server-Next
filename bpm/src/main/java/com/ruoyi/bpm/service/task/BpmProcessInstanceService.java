@@ -1,10 +1,11 @@
-package cn.iocoder.yudao.module.bpm.service.task;
+package com.ruoyi.bpm.service.task;
 
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.module.bpm.api.task.dto.BpmProcessInstanceCreateReqDTO;
-import cn.iocoder.yudao.module.bpm.controller.admin.task.vo.instance.BpmProcessInstanceCancelReqVO;
-import cn.iocoder.yudao.module.bpm.controller.admin.task.vo.instance.BpmProcessInstanceCreateReqVO;
-import cn.iocoder.yudao.module.bpm.controller.admin.task.vo.instance.BpmProcessInstancePageReqVO;
+
+import com.ruoyi.bpm.controller.task.vo.instance.BpmProcessInstanceCancelReqVO;
+import com.ruoyi.bpm.controller.task.vo.instance.BpmProcessInstanceCreateReqVO;
+import com.ruoyi.bpm.controller.task.vo.instance.BpmProcessInstancePageReqVO;
+import com.ruoyi.bpm.service.task.dto.BpmProcessInstanceCreateReqDTO;
+import com.ruoyi.common.core.page.TableDataInfo;
 import org.flowable.engine.delegate.event.FlowableCancelledEvent;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
@@ -14,7 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertMap;
+import static com.ruoyi.common.utils.CollectionUtils.convertMap;
+
 
 /**
  * 流程实例 Service 接口
@@ -82,8 +84,8 @@ public interface BpmProcessInstanceService {
      * @param pageReqVO 分页请求
      * @return 流程实例的分页
      */
-    PageResult<HistoricProcessInstance> getProcessInstancePage(Long userId,
-                                                               @Valid BpmProcessInstancePageReqVO pageReqVO);
+    TableDataInfo getProcessInstancePage(Long userId,
+                                         @Valid BpmProcessInstancePageReqVO pageReqVO);
 
     /**
      * 创建流程实例（提供给前端）

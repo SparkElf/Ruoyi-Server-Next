@@ -1,6 +1,7 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate;
+package com.ruoyi.bpm.framework.flowable.core.candidate;
 
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.enums.BpmTaskCandidateStrategyEnum;
+
+import com.ruoyi.bpm.enums.task.BpmTaskCandidateStrategyEnum;
 import org.flowable.engine.delegate.DelegateExecution;
 
 import java.util.Set;

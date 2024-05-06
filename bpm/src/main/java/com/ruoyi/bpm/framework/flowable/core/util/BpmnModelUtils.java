@@ -1,13 +1,27 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.util;
+package com.ruoyi.bpm.framework.flowable.core.util;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
-import cn.iocoder.yudao.framework.common.util.number.NumberUtils;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.enums.BpmnModelConstants;
+
+import cn.hutool.core.util.StrUtil;
+import com.ruoyi.bpm.controller.definition.vo.model.BpmModelRespVO;
+import com.ruoyi.bpm.controller.definition.vo.process.BpmProcessDefinitionRespVO;
+import com.ruoyi.bpm.domain.definition.BpmCategoryDO;
+import com.ruoyi.bpm.domain.definition.BpmFormDO;
+import com.ruoyi.bpm.enums.BpmnModelConstants;
+import com.ruoyi.bpm.service.definition.dto.BpmModelMetaInfoRespDTO;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.utils.CollectionUtils;
+import com.ruoyi.common.utils.JsonUtils;
+import com.ruoyi.common.utils.object.BeanUtils;
 import org.flowable.bpmn.converter.BpmnXMLConverter;
 import org.flowable.bpmn.model.Process;
 import org.flowable.bpmn.model.*;
+import org.flowable.common.engine.impl.db.SuspensionState;
 import org.flowable.common.engine.impl.util.io.BytesStreamSource;
+import org.flowable.engine.repository.Deployment;
+import org.flowable.engine.repository.Model;
+import org.flowable.engine.repository.ProcessDefinition;
 
 import java.util.*;
 
@@ -15,9 +29,86 @@ import java.util.*;
  * 流程模型转操作工具类
  */
 public class BpmnModelUtils {
-
+    public static BpmModelRespVO buildBpmModelRespVO(Model model,
+               byte[] bpmnBytes) {
+        BpmModelMetaInfoRespDTO metaInfo = buildMetaInfo(model);
+        BpmModelRespVO modelVO = buildBpmModelRespVO(model, metaInfo, null, null, null, null);
+        if (ArrayUtil.isNotEmpty(bpmnBytes)) {
+            modelVO.setBpmnXml(new String(bpmnBytes));
+        }
+        return modelVO;
+    }
+    public static List<BpmModelRespVO> buildBpmModelRespVOList(List<Model> modelList,
+                                                            Map<Long, BpmFormDO> formMap,
+                                                            Map<String, BpmCategoryDO> categoryMap, Map<String, Deployment> deploymentMap,
+                                                            Map<String, ProcessDefinition> processDefinitionMap) {
+        List<BpmModelRespVO> list = CollectionUtils.convertList(modelList, model -> {
+            BpmModelMetaInfoRespDTO metaInfo = buildMetaInfo(model);
+            BpmFormDO form = metaInfo != null ? formMap.get(metaInfo.getFormId()) : null;
+            BpmCategoryDO category = categoryMap.get(model.getCategory());
+            Deployment deployment = model.getDeploymentId() != null ? deploymentMap.get(model.getDeploymentId()) : null;
+            ProcessDefinition processDefinition = model.getDeploymentId() != null ? processDefinitionMap.get(model.getDeploymentId()) : null;
+            return buildBpmModelRespVO(model, metaInfo, form, category, deployment, processDefinition);
+        });
+        return list;
+    }
+    public static BpmModelRespVO buildBpmModelRespVO(Model model,
+    BpmModelMetaInfoRespDTO metaInfo, BpmFormDO form, BpmCategoryDO category,
+    Deployment deployment, ProcessDefinition processDefinition) {
+        BpmModelRespVO modelRespVO = new BpmModelRespVO().setId(model.getId()).setName(model.getName())
+                .setKey(model.getKey()).setCategory(model.getCategory())
+                .setCreateTime(model.getCreateTime());
+        // Form
+        if (metaInfo != null) {
+            modelRespVO.setFormType(metaInfo.getFormType()).setFormId(metaInfo.getFormId())
+                    .setFormCustomCreatePath(metaInfo.getFormCustomCreatePath())
+                    .setFormCustomViewPath(metaInfo.getFormCustomViewPath());
+            modelRespVO.setIcon(metaInfo.getIcon()).setDescription(metaInfo.getDescription());
+        }
+        if (form != null) {
+            modelRespVO.setFormId(form.getId()).setFormName(form.getName());
+        }
+        // Category
+        if (category != null) {
+            modelRespVO.setCategoryName(category.getName());
+        }
+        // ProcessDefinition
+        if (processDefinition != null) {
+            modelRespVO.setProcessDefinition(BeanUtils.toBean(processDefinition, BpmProcessDefinitionRespVO.class));
+            modelRespVO.getProcessDefinition().setSuspensionState(processDefinition.isSuspended() ?
+                    SuspensionState.SUSPENDED.getStateCode() : SuspensionState.ACTIVE.getStateCode());
+            if (deployment != null) {
+                modelRespVO.getProcessDefinition().setDeploymentTime(deployment.getDeploymentTime());
+            }
+        }
+        return modelRespVO;
+    }
+    public static BpmModelMetaInfoRespDTO buildMetaInfo(Model model) {
+        return JsonUtils.parseObject(model.getMetaInfo(), BpmModelMetaInfoRespDTO.class);
+    }
+    public static String buildMetaInfoStr(BpmModelMetaInfoRespDTO metaInfo,
+                                          String icon, String description,
+                                          Integer formType, Long formId, String formCustomCreatePath, String formCustomViewPath) {
+        if (metaInfo == null) {
+            metaInfo = new BpmModelMetaInfoRespDTO();
+        }
+        // 只有非空，才进行设置，避免更新时的覆盖
+        if (StrUtil.isNotEmpty(icon)) {
+            metaInfo.setIcon(icon);
+        }
+        if (StrUtil.isNotEmpty(description)) {
+            metaInfo.setDescription(description);
+        }
+        if (Objects.nonNull(formType)) {
+            metaInfo.setFormType(formType);
+            metaInfo.setFormId(formId);
+            metaInfo.setFormCustomCreatePath(formCustomCreatePath);
+            metaInfo.setFormCustomViewPath(formCustomViewPath);
+        }
+        return JsonUtils.toJsonString(metaInfo);
+    }
     public static Integer parseCandidateStrategy(FlowElement userTask) {
-        return NumberUtils.parseInt(userTask.getAttributeValue(
+        return  Integer.parseInt(userTask.getAttributeValue(
                 BpmnModelConstants.NAMESPACE, BpmnModelConstants.USER_TASK_CANDIDATE_STRATEGY));
     }
 

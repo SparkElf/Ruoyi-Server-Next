@@ -1,13 +1,12 @@
-package com.ruoyi.service.definition;
+package com.ruoyi.bpm.service.definition;
 
 
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.controller.definition.vo.form.BpmFormPageReqVO;
-import com.ruoyi.controller.definition.vo.form.BpmFormSaveReqVO;
-import com.ruoyi.domain.definition.BpmFormDO;
+import com.ruoyi.bpm.controller.definition.vo.form.BpmFormPageReqVO;
+import com.ruoyi.bpm.controller.definition.vo.form.BpmFormSaveReqVO;
+import com.ruoyi.bpm.domain.definition.BpmFormDO;
 
 import javax.validation.Valid;
 import java.util.Collection;

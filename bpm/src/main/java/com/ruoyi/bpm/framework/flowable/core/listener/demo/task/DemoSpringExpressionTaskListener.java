@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.listener.demo.task;
+package com.ruoyi.bpm.framework.flowable.core.listener.demo.task;
 
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.task.service.delegate.DelegateTask;

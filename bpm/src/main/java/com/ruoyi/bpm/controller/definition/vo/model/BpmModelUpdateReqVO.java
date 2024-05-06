@@ -1,11 +1,15 @@
-package com.ruoyi.controller.definition.vo.model;
+package com.ruoyi.bpm.controller.definition.vo.model;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.flowable.engine.repository.Model;
 import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotEmpty;
+
+import static com.ruoyi.bpm.framework.flowable.core.util.BpmnModelUtils.buildMetaInfo;
+import static com.ruoyi.bpm.framework.flowable.core.util.BpmnModelUtils.buildMetaInfoStr;
 
 @Schema(description = "管理后台 - 流程模型的更新 Request VO")
 @Data
@@ -42,4 +46,11 @@ public class BpmModelUpdateReqVO {
             example = "/bpm/oa/leave/view")
     private String formCustomViewPath;
 
+    public void copyTo(Model model) {
+        model.setName(getName());
+        model.setCategory(getCategory());
+        model.setMetaInfo(buildMetaInfoStr(buildMetaInfo(model),
+                getIcon(), getDescription(),
+                getFormType(), getFormId(), getFormCustomCreatePath(), getFormCustomViewPath()));
+    }
 }

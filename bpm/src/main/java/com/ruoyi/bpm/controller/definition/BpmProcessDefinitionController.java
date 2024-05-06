@@ -1,18 +1,19 @@
-package cn.iocoder.yudao.module.bpm.controller.admin.definition;
+package com.ruoyi.bpm.controller.definition;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.iocoder.yudao.framework.common.pojo.CommonResult;
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.module.bpm.controller.admin.definition.vo.process.BpmProcessDefinitionPageReqVO;
-import cn.iocoder.yudao.module.bpm.controller.admin.definition.vo.process.BpmProcessDefinitionRespVO;
-import cn.iocoder.yudao.module.bpm.convert.definition.BpmProcessDefinitionConvert;
-import cn.iocoder.yudao.module.bpm.dal.dataobject.definition.BpmCategoryDO;
-import cn.iocoder.yudao.module.bpm.dal.dataobject.definition.BpmFormDO;
-import cn.iocoder.yudao.module.bpm.dal.dataobject.definition.BpmProcessDefinitionInfoDO;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.strategy.BpmTaskCandidateStartUserSelectStrategy;
-import cn.iocoder.yudao.module.bpm.service.definition.BpmCategoryService;
-import cn.iocoder.yudao.module.bpm.service.definition.BpmFormService;
-import cn.iocoder.yudao.module.bpm.service.definition.BpmProcessDefinitionService;
+
+import com.ruoyi.bpm.controller.definition.vo.process.BpmProcessDefinitionPageReqVO;
+import com.ruoyi.bpm.controller.definition.vo.process.BpmProcessDefinitionRespVO;
+import com.ruoyi.bpm.domain.definition.BpmCategoryDO;
+import com.ruoyi.bpm.domain.definition.BpmFormDO;
+import com.ruoyi.bpm.domain.definition.BpmProcessDefinitionInfoDO;
+import com.ruoyi.bpm.framework.flowable.core.candidate.strategy.BpmTaskCandidateStartUserSelectStrategy;
+import com.ruoyi.bpm.service.definition.BpmCategoryService;
+import com.ruoyi.bpm.service.definition.BpmFormService;
+import com.ruoyi.bpm.service.definition.BpmProcessDefinitionService;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,14 +33,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertSet;
+import static com.ruoyi.bpm.framework.flowable.core.util.ProcessUtils.buildProcessDefinition;
+import static com.ruoyi.bpm.framework.flowable.core.util.ProcessUtils.buildProcessDefinitionList;
+import static com.ruoyi.common.utils.CollectionUtils.convertSet;
+
 
 @Tag(name = "管理后台 - 流程定义")
 @RestController
 @RequestMapping("/bpm/process-definition")
 @Validated
-public class BpmProcessDefinitionController {
+public class BpmProcessDefinitionController extends BaseController {
 
     @Resource
     private BpmProcessDefinitionService processDefinitionService;
@@ -50,35 +53,37 @@ public class BpmProcessDefinitionController {
 
     @GetMapping("/page")
     @Operation(summary = "获得流程定义分页")
-    @PreAuthorize("@ss.hasPermission('bpm:process-definition:query')")
-    public CommonResult<PageResult<BpmProcessDefinitionRespVO>> getProcessDefinitionPage(
+    @PreAuthorize("@ss.hasPermi('bpm:process-definition:query')")
+    public TableDataInfo getProcessDefinitionPage(
             BpmProcessDefinitionPageReqVO pageReqVO) {
-        PageResult<ProcessDefinition> pageResult = processDefinitionService.getProcessDefinitionPage(pageReqVO);
-        if (CollUtil.isEmpty(pageResult.getList())) {
-            return success(PageResult.empty(pageResult.getTotal()));
+        //BpmProcessDefinitionRespVO
+        var pageResult = processDefinitionService.getProcessDefinitionPage(pageReqVO);
+        if (pageResult.isEmpty()) {
+            return pageResult;
         }
-
+        var list=(List<ProcessDefinition>) pageResult.getRows();
         // 获得 Category Map
         Map<String, BpmCategoryDO> categoryMap = categoryService.getCategoryMap(
-                convertSet(pageResult.getList(), ProcessDefinition::getCategory));
+                convertSet(list, ProcessDefinition::getCategory));
         // 获得 Deployment Map
         Map<String, Deployment> deploymentMap = processDefinitionService.getDeploymentMap(
-                convertSet(pageResult.getList(), ProcessDefinition::getDeploymentId));
+                convertSet(list, ProcessDefinition::getDeploymentId));
         // 获得 BpmProcessDefinitionInfoDO Map
         Map<String, BpmProcessDefinitionInfoDO> processDefinitionMap = processDefinitionService.getProcessDefinitionInfoMap(
-                convertSet(pageResult.getList(), ProcessDefinition::getId));
+                convertSet(list, ProcessDefinition::getId));
         // 获得 Form Map
         Map<Long, BpmFormDO> formMap = formService.getFormMap(
                convertSet(processDefinitionMap.values(), BpmProcessDefinitionInfoDO::getFormId));
-        return success(BpmProcessDefinitionConvert.INSTANCE.buildProcessDefinitionPage(
-                pageResult, deploymentMap, processDefinitionMap, formMap, categoryMap));
+
+        return new TableDataInfo(buildProcessDefinitionList(
+                list, deploymentMap, processDefinitionMap, formMap, categoryMap),pageResult.getTotal());
     }
 
     @GetMapping ("/list")
     @Operation(summary = "获得流程定义列表")
     @Parameter(name = "suspensionState", description = "挂起状态", required = true, example = "1") // 参见 Flowable SuspensionState 枚举
-    @PreAuthorize("@ss.hasPermission('bpm:process-definition:query')")
-    public CommonResult<List<BpmProcessDefinitionRespVO>> getProcessDefinitionList(
+    @PreAuthorize("@ss.hasPermi('bpm:process-definition:query')")
+    public AjaxResult getProcessDefinitionList(
             @RequestParam("suspensionState") Integer suspensionState) {
         List<ProcessDefinition> list = processDefinitionService.getProcessDefinitionListBySuspensionState(suspensionState);
         if (CollUtil.isEmpty(list)) {
@@ -88,7 +93,7 @@ public class BpmProcessDefinitionController {
         // 获得 BpmProcessDefinitionInfoDO Map
         Map<String, BpmProcessDefinitionInfoDO> processDefinitionMap = processDefinitionService.getProcessDefinitionInfoMap(
                 convertSet(list, ProcessDefinition::getId));
-        return success(BpmProcessDefinitionConvert.INSTANCE.buildProcessDefinitionList(
+        return success(buildProcessDefinitionList(
                 list, null, processDefinitionMap, null, null));
     }
 
@@ -96,8 +101,8 @@ public class BpmProcessDefinitionController {
     @Operation(summary = "获得流程定义")
     @Parameter(name = "id", description = "流程编号", required = true, example = "1024")
     @Parameter(name = "key", description = "流程定义标识", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('bpm:process-definition:query')")
-    public CommonResult<BpmProcessDefinitionRespVO> getProcessDefinition(
+    @PreAuthorize("@ss.hasPermi('bpm:process-definition:query')")
+    public AjaxResult getProcessDefinition(
             @RequestParam(value = "id", required = false) String id,
             @RequestParam(value = "key", required = false) String key) {
         ProcessDefinition processDefinition = id != null ? processDefinitionService.getProcessDefinition(id)
@@ -107,7 +112,7 @@ public class BpmProcessDefinitionController {
         }
         BpmnModel bpmnModel = processDefinitionService.getProcessDefinitionBpmnModel(processDefinition.getId());
         List<UserTask> userTaskList = BpmTaskCandidateStartUserSelectStrategy.getStartUserSelectUserTaskList(bpmnModel);
-        return success(BpmProcessDefinitionConvert.INSTANCE.buildProcessDefinition(
+        return success(buildProcessDefinition(
                 processDefinition, null, null, null, null, bpmnModel, userTaskList));
     }
 

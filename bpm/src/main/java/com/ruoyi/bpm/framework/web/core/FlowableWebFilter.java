@@ -1,7 +1,10 @@
-package cn.iocoder.yudao.module.bpm.framework.web.core;
+package com.ruoyi.bpm.framework.web.core;
 
-import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.util.FlowableUtils;
+
+import com.ruoyi.bpm.framework.flowable.core.util.FlowableUtils;
+import com.ruoyi.common.core.domain.model.LoginUser;
+import com.ruoyi.common.utils.SecurityUtils;
+import org.flowable.common.engine.impl.identity.Authentication;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -20,18 +23,21 @@ public class FlowableWebFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-        try {
-            // 设置工作流的用户
-            Long userId = SecurityFrameworkUtils.getLoginUserId();
-            if (userId != null) {
-                FlowableUtils.setAuthenticatedUserId(userId);
+
+
+            try {
+                // 设置工作流的用户 不能直接用SecurityUtils.getLoginUserId()，会报空指针，要分步骤拆开
+                LoginUser loginUser = SecurityUtils.getLoginUserSafe();
+                if (loginUser != null&&loginUser.getUserId()!=null) {
+                    Authentication.setAuthenticatedUserId(loginUser.getUserId().toString());
+                }
+
+                // 过滤
+                chain.doFilter(request, response);
+            } finally {
+                // 清理
+                Authentication.setAuthenticatedUserId(null);
             }
-            // 过滤
-            chain.doFilter(request, response);
-        } finally {
-            // 清理
-            FlowableUtils.clearAuthenticatedUserId();
-        }
     }
 
 }

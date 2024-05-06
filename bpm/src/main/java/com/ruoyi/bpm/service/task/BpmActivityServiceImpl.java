@@ -1,7 +1,7 @@
-package cn.iocoder.yudao.module.bpm.service.task;
+package com.ruoyi.bpm.service.task;
 
-import cn.iocoder.yudao.module.bpm.controller.admin.task.vo.activity.BpmActivityRespVO;
-import cn.iocoder.yudao.module.bpm.convert.task.BpmActivityConvert;
+
+import com.ruoyi.bpm.controller.task.vo.activity.BpmActivityRespVO;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.history.HistoricActivityInstance;
@@ -29,7 +29,15 @@ public class BpmActivityServiceImpl implements BpmActivityService {
     public List<BpmActivityRespVO> getActivityListByProcessInstanceId(String processInstanceId) {
         List<HistoricActivityInstance> activityList = historyService.createHistoricActivityInstanceQuery()
                 .processInstanceId(processInstanceId).list();
-        return BpmActivityConvert.INSTANCE.convertList(activityList);
+        return activityList.stream().map(activity->{
+            BpmActivityRespVO bpmActivityRespVO = new BpmActivityRespVO();
+            bpmActivityRespVO.setKey(activity.getActivityId());
+            bpmActivityRespVO.setType(activity.getActivityType());
+            bpmActivityRespVO.setTaskId(activity.getTaskId());
+            bpmActivityRespVO.setStartTime(activity.getStartTime());
+            bpmActivityRespVO.setEndTime(activity.getEndTime());
+            return bpmActivityRespVO;
+        }).toList();
     }
 
     @Override

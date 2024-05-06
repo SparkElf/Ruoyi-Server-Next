@@ -1,7 +1,8 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.behavior;
+package com.ruoyi.bpm.framework.flowable.core.behavior;
 
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.util.FlowableUtils;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.BpmTaskCandidateInvoker;
+
+import com.ruoyi.bpm.framework.flowable.core.candidate.BpmTaskCandidateInvoker;
+import com.ruoyi.bpm.framework.flowable.core.util.FlowableUtils;
 import lombok.Setter;
 import org.flowable.bpmn.model.Activity;
 import org.flowable.engine.delegate.DelegateExecution;
@@ -22,6 +23,11 @@ import java.util.Set;
 public class BpmParallelMultiInstanceBehavior extends ParallelMultiInstanceBehavior {
 
     private BpmTaskCandidateInvoker taskCandidateInvoker;
+
+    public BpmParallelMultiInstanceBehavior setTaskCandidateInvoker(BpmTaskCandidateInvoker taskCandidateInvoker) {
+        this.taskCandidateInvoker = taskCandidateInvoker;
+        return this;
+    }
 
     public BpmParallelMultiInstanceBehavior(Activity activity,
                                             AbstractBpmnActivityBehavior innerActivityBehavior) {

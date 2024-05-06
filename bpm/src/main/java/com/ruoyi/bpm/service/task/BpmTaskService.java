@@ -1,8 +1,9 @@
-package cn.iocoder.yudao.module.bpm.service.task;
+package com.ruoyi.bpm.service.task;
 
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
-import cn.iocoder.yudao.module.bpm.controller.admin.task.vo.task.*;
+
+import com.ruoyi.bpm.controller.task.vo.task.*;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.utils.CollectionUtils;
 import org.flowable.bpmn.model.UserTask;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.history.HistoricTaskInstance;
@@ -27,7 +28,7 @@ public interface BpmTaskService {
      * @param pageReqVO 分页请求
      * @return 流程任务分页
      */
-    PageResult<Task> getTaskTodoPage(Long userId, BpmTaskPageReqVO pageReqVO);
+    TableDataInfo getTaskTodoPage(Long userId, BpmTaskPageReqVO pageReqVO);
 
     /**
      * 获得已办的流程任务分页
@@ -36,7 +37,7 @@ public interface BpmTaskService {
      * @param pageReqVO 分页请求
      * @return 流程任务分页
      */
-    PageResult<HistoricTaskInstance> getTaskDonePage(Long userId, BpmTaskPageReqVO pageReqVO);
+    TableDataInfo getTaskDonePage(Long userId, BpmTaskPageReqVO pageReqVO);
 
     /**
      * 获得全部的流程任务分页
@@ -45,7 +46,7 @@ public interface BpmTaskService {
      * @param pageReqVO 分页请求
      * @return 流程任务分页
      */
-    PageResult<HistoricTaskInstance> getTaskPage(Long userId, BpmTaskPageReqVO pageReqVO);
+    TableDataInfo getTaskPage(Long userId, BpmTaskPageReqVO pageReqVO);
 
     /**
      * 获得流程任务 Map
@@ -112,12 +113,12 @@ public interface BpmTaskService {
      */
     void updateTaskStatusWhenCanceled(String taskId);
 
-    /**
-     * 更新 Task 拓展记录，并发送通知
-     *
-     * @param task 任务实体
-     */
-    void updateTaskExtAssign(Task task);
+//    /**
+//     * 更新 Task 拓展记录，并发送通知
+//     *
+//     * @param task 任务实体
+//     */
+//    void updateTaskExtAssign(Task task);
 
     /**
      * 获取任务

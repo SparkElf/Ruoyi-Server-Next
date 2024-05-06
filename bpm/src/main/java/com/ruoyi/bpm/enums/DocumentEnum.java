@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.framework.common.enums;
+package com.ruoyi.bpm.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

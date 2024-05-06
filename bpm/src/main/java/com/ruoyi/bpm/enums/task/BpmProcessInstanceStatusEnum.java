@@ -1,4 +1,4 @@
-package com.ruoyi.enums.task;
+package com.ruoyi.bpm.enums.task;
 
 
 import lombok.AllArgsConstructor;

@@ -1,9 +1,10 @@
 package com.ruoyi.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import cn.hutool.core.collection.CollUtil;
+import com.ruoyi.common.enums.CommonStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.common.annotation.DataScope;
@@ -21,6 +22,10 @@ import com.ruoyi.system.mapper.SysDeptMapper;
 import com.ruoyi.system.mapper.SysRoleMapper;
 import com.ruoyi.system.service.ISysDeptService;
 
+import static com.ruoyi.common.exception.ErrorCodeConstants.DEPT_NOT_ENABLE;
+import static com.ruoyi.common.exception.ErrorCodeConstants.DEPT_NOT_FOUND;
+import static com.ruoyi.common.exception.ServiceExceptionUtil.exception;
+
 /**
  * 部门管理 服务实现
  * 
@@ -35,6 +40,32 @@ public class SysDeptServiceImpl implements ISysDeptService
     @Autowired
     private SysRoleMapper roleMapper;
 
+    @Override
+    public Map<Long,SysDept> getDeptMap(Collection<Long> ids){
+        return ids.stream().map(id-> deptMapper.selectDeptById(id)).collect(Collectors.toMap(SysDept::getDeptId, dept->dept));
+    }
+    @Override
+    public void validateDeptList(Collection<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return;
+        }
+        // 获得科室信息
+        Map<Long, SysDept> deptMap = getDeptMap(ids);
+        // 校验
+        ids.forEach(id -> {
+            SysDept dept = deptMap.get(id);
+            if (dept == null) {
+                throw exception(DEPT_NOT_FOUND);
+            }
+            if (!CommonStatusEnum.ENABLE.getStatus().equals(dept.getStatus())) {
+                throw exception(DEPT_NOT_ENABLE, dept.getDeptName());
+            }
+        });
+    }
+    @Override
+    public List<SysDept> getDeptList(Collection<Long>ids){
+        return deptMapper.selectBatchIds(ids);
+    }
     /**
      * 查询部门管理数据
      * 

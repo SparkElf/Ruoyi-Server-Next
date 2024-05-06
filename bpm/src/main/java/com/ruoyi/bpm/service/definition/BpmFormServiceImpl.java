@@ -1,22 +1,21 @@
-package com.ruoyi.service.definition;
+package com.ruoyi.bpm.service.definition;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.Assert;
 
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.object.BeanUtils;
-import com.ruoyi.controller.definition.vo.form.BpmFormPageReqVO;
-import com.ruoyi.controller.definition.vo.form.BpmFormSaveReqVO;
-import com.ruoyi.domain.definition.BpmFormDO;
-import com.ruoyi.enums.ErrorCodeConstants;
-import com.ruoyi.mapper.definition.BpmFormMapper;
+import com.ruoyi.bpm.controller.definition.vo.form.BpmFormPageReqVO;
+import com.ruoyi.bpm.controller.definition.vo.form.BpmFormSaveReqVO;
+import com.ruoyi.bpm.domain.definition.BpmFormDO;
+import com.ruoyi.bpm.enums.ErrorCodeConstants;
+import com.ruoyi.bpm.mapper.definition.BpmFormMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
 import java.util.*;
 
-import static com.ruoyi.utils.exception.util.ServiceExceptionUtil.exception;
+import static com.ruoyi.common.exception.ServiceExceptionUtil.exception;
 
 
 /**

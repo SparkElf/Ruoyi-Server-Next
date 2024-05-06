@@ -1,7 +1,8 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.behavior;
+package com.ruoyi.bpm.framework.flowable.core.behavior;
 
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.util.FlowableUtils;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.BpmTaskCandidateInvoker;
+
+import com.ruoyi.bpm.framework.flowable.core.candidate.BpmTaskCandidateInvoker;
+import com.ruoyi.bpm.framework.flowable.core.util.FlowableUtils;
 import lombok.Setter;
 import org.flowable.bpmn.model.Activity;
 import org.flowable.engine.delegate.DelegateExecution;
@@ -22,6 +23,11 @@ import java.util.Set;
 public class BpmSequentialMultiInstanceBehavior extends SequentialMultiInstanceBehavior {
 
     private BpmTaskCandidateInvoker taskCandidateInvoker;
+
+    public BpmSequentialMultiInstanceBehavior setTaskCandidateInvoker(BpmTaskCandidateInvoker taskCandidateInvoker) {
+        this.taskCandidateInvoker = taskCandidateInvoker;
+        return this;
+    }
 
     public BpmSequentialMultiInstanceBehavior(Activity activity, AbstractBpmnActivityBehavior innerActivityBehavior) {
         super(activity, innerActivityBehavior);

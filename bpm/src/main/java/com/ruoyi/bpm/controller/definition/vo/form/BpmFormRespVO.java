@@ -1,7 +1,8 @@
-package com.ruoyi.controller.definition.vo.form;
+package com.ruoyi.bpm.controller.definition.vo.form;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Schema(description = "管理后台 - 动态表单 Response VO")
 @Data
+@Accessors(chain = true)
 public class BpmFormRespVO {
 
     @Schema(description = "表单编号",required=true, example = "1024")

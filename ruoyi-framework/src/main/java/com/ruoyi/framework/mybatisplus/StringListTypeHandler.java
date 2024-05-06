@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.framework.mybatis.core.type;
+package com.ruoyi.framework.mybatisplus;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;

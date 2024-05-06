@@ -1,11 +1,12 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.strategy;
+package com.ruoyi.bpm.framework.flowable.core.candidate.strategy;
 
-import cn.iocoder.yudao.framework.common.util.string.StrUtils;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.enums.BpmTaskCandidateStrategyEnum;
-import cn.iocoder.yudao.module.system.api.dept.PostApi;
-import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
-import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
+
+import com.ruoyi.bpm.enums.task.BpmTaskCandidateStrategyEnum;
+import com.ruoyi.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.utils.StrUtils;
+import com.ruoyi.system.service.ISysPostService;
+import com.ruoyi.system.service.ISysUserService;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,8 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertSet;
+import static com.ruoyi.common.utils.CollectionUtils.convertSet;
+
 
 /**
  * 岗位 {@link BpmTaskCandidateStrategy} 实现类
@@ -24,9 +26,9 @@ import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.
 public class BpmTaskCandidatePostStrategy implements BpmTaskCandidateStrategy {
 
     @Resource
-    private PostApi postApi;
+    private ISysPostService postApi;
     @Resource
-    private AdminUserApi adminUserApi;
+    private ISysUserService userApi;
 
     @Override
     public BpmTaskCandidateStrategyEnum getStrategy() {
@@ -36,14 +38,14 @@ public class BpmTaskCandidatePostStrategy implements BpmTaskCandidateStrategy {
     @Override
     public void validateParam(String param) {
         Set<Long> postIds = StrUtils.splitToLongSet(param);
-        postApi.validPostList(postIds);
+        postApi.validatePostList(postIds);
     }
 
     @Override
     public Set<Long> calculateUsers(DelegateExecution execution, String param) {
         Set<Long> postIds = StrUtils.splitToLongSet(param);
-        List<AdminUserRespDTO> users = adminUserApi.getUserListByPostIds(postIds);
-        return convertSet(users, AdminUserRespDTO::getId);
+        List<SysUser> users = userApi.getUserListByPostIds(postIds);
+        return convertSet(users, SysUser::getUserId);
     }
 
 }

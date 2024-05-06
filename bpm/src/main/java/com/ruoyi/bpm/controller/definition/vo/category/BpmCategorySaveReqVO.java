@@ -1,4 +1,4 @@
-package com.ruoyi.controller.definition.vo.category;
+package com.ruoyi.bpm.controller.definition.vo.category;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -1,6 +1,11 @@
 package com.ruoyi.system.service.impl;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+
+import cn.hutool.core.collection.CollUtil;
+import com.ruoyi.common.enums.CommonStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.common.constant.UserConstants;
@@ -10,6 +15,11 @@ import com.ruoyi.system.domain.SysPost;
 import com.ruoyi.system.mapper.SysPostMapper;
 import com.ruoyi.system.mapper.SysUserPostMapper;
 import com.ruoyi.system.service.ISysPostService;
+
+import static com.ruoyi.common.exception.ErrorCodeConstants.POST_NOT_ENABLE;
+import static com.ruoyi.common.exception.ErrorCodeConstants.POST_NOT_FOUND;
+import static com.ruoyi.common.exception.ServiceExceptionUtil.exception;
+import static com.ruoyi.common.utils.CollectionUtils.convertMap;
 
 /**
  * 岗位信息 服务层处理
@@ -25,6 +35,26 @@ public class SysPostServiceImpl implements ISysPostService
     @Autowired
     private SysUserPostMapper userPostMapper;
 
+
+    @Override
+    public void validatePostList(Collection<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return;
+        }
+        // 获得岗位信息
+        List<SysPost> posts = postMapper.selectBatchIds(ids);
+        Map<Long, SysPost> postMap = convertMap(posts, SysPost::getPostId);
+        // 校验
+        ids.forEach(id -> {
+            SysPost post = postMap.get(id);
+            if (post == null) {
+                throw exception(POST_NOT_FOUND);
+            }
+            if (!CommonStatusEnum.ENABLE.getStatus().equals(post.getStatus())) {
+                throw exception(POST_NOT_ENABLE, post.getPostName());
+            }
+        });
+    }
     /**
      * 查询岗位信息集合
      * 

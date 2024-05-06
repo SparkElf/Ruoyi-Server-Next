@@ -1,11 +1,12 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.config;
+package com.ruoyi.bpm.framework.flowable.config;
 
 import cn.hutool.core.collection.ListUtil;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.behavior.BpmActivityBehaviorFactory;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.BpmTaskCandidateInvoker;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.event.BpmProcessInstanceEventPublisher;
-import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
+
+import com.ruoyi.bpm.framework.flowable.core.behavior.BpmActivityBehaviorFactory;
+import com.ruoyi.bpm.framework.flowable.core.candidate.BpmTaskCandidateInvoker;
+import com.ruoyi.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
+import com.ruoyi.bpm.framework.flowable.core.event.BpmProcessInstanceEventPublisher;
+import com.ruoyi.system.service.ISysUserService;
 import org.flowable.common.engine.api.delegate.event.FlowableEventListener;
 import org.flowable.spring.SpringProcessEngineConfiguration;
 import org.flowable.spring.boot.EngineConfigurationConfigurer;
@@ -75,10 +76,10 @@ public class BpmFlowableConfiguration {
     }
 
     @Bean
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") // adminUserApi 可以注入成功
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") // ISysUserService 可以注入成功
     public BpmTaskCandidateInvoker bpmTaskCandidateInvoker(List<BpmTaskCandidateStrategy> strategyList,
-                                                           AdminUserApi adminUserApi) {
-        return new BpmTaskCandidateInvoker(strategyList, adminUserApi);
+                                                           ISysUserService userApi) {
+        return new BpmTaskCandidateInvoker(strategyList, userApi);
     }
 
     // =========== 自己拓展的 Bean ==========

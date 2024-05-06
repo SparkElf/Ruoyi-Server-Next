@@ -1,14 +1,17 @@
-package com.ruoyi.controller.definition.vo.model;
+package com.ruoyi.bpm.controller.definition.vo.model;
 
 
-import com.ruoyi.controller.definition.vo.process.BpmProcessDefinitionRespVO;
+import com.ruoyi.bpm.controller.definition.vo.process.BpmProcessDefinitionRespVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Schema(description = "管理后台 - 流程模型 Response VO")
 @Data
+@Accessors(chain = true)
 public class BpmModelRespVO {
 
     @Schema(description = "编号",required=true, example = "1024")
@@ -45,7 +48,7 @@ public class BpmModelRespVO {
     private String formCustomViewPath; // ，使用 Vue 的路由地址-在表单类型为 {@link BpmModelFormTypeEnum#CUSTOM} 时，必须非空
 
     @Schema(description = "创建时间",required=true)
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @Schema(description = "BPMN XML",required=true)
     private String bpmnXml;

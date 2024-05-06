@@ -1,6 +1,9 @@
 package com.ruoyi.system.service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.common.core.domain.TreeSelect;
 import com.ruoyi.common.core.domain.entity.SysDept;
 
@@ -11,6 +14,12 @@ import com.ruoyi.common.core.domain.entity.SysDept;
  */
 public interface ISysDeptService
 {
+    Map<Long,SysDept> getDeptMap(Collection<Long> ids);
+
+    void validateDeptList(Collection<Long> ids);
+
+    List<SysDept> getDeptList(Collection<Long> ids);
+
     /**
      * 查询部门管理数据
      * 

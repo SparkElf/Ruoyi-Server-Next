@@ -1,4 +1,4 @@
-package com.ruoyi.controller.definition.vo.model;
+package com.ruoyi.bpm.controller.definition.vo.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

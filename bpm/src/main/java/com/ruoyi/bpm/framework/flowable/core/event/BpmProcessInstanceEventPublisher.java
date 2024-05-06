@@ -1,6 +1,7 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.event;
+package com.ruoyi.bpm.framework.flowable.core.event;
 
-import cn.iocoder.yudao.module.bpm.event.BpmProcessInstanceStatusEvent;
+
+import com.ruoyi.bpm.event.BpmProcessInstanceStatusEvent;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.validation.annotation.Validated;

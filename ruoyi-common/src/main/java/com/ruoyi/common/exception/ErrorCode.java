@@ -1,4 +1,4 @@
-package com.ruoyi.bpm.utils.exception;
+package com.ruoyi.common.exception;
 
 
 import lombok.Data;

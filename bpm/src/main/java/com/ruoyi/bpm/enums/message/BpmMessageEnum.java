@@ -1,4 +1,4 @@
-package com.ruoyi.enums.message;
+package com.ruoyi.bpm.enums.message;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

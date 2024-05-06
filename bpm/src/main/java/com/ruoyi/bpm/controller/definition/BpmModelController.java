@@ -1,24 +1,30 @@
-package com.ruoyi.controller.definition;
+package com.ruoyi.bpm.controller.definition;
 
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.stream.StreamUtil;
+import com.ruoyi.bpm.controller.definition.vo.model.*;
+import com.ruoyi.bpm.domain.definition.BpmCategoryDO;
+import com.ruoyi.bpm.service.definition.BpmProcessDefinitionService;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.utils.CollectionUtils;
+import com.ruoyi.common.utils.IoUtils;
 import com.ruoyi.common.utils.JsonUtils;
-import com.ruoyi.controller.definition.vo.model.*;
-import com.ruoyi.domain.definition.BpmFormDO;
-import com.ruoyi.service.definition.BpmCategoryService;
-import com.ruoyi.service.definition.BpmFormService;
-import com.ruoyi.service.definition.BpmModelService;
-import com.ruoyi.service.definition.dto.BpmModelMetaInfoRespDTO;
+import com.ruoyi.common.utils.object.BeanUtils;
+
+import com.ruoyi.bpm.domain.definition.BpmFormDO;
+import com.ruoyi.bpm.service.definition.BpmCategoryService;
+import com.ruoyi.bpm.service.definition.BpmFormService;
+import com.ruoyi.bpm.service.definition.BpmModelService;
+import com.ruoyi.bpm.service.definition.dto.BpmModelMetaInfoRespDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.Model;
+import org.flowable.engine.repository.ProcessDefinition;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,11 +37,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.ruoyi.bpm.framework.flowable.core.util.BpmnModelUtils.buildBpmModelRespVO;
+import static com.ruoyi.bpm.framework.flowable.core.util.BpmnModelUtils.buildBpmModelRespVOList;
+import static com.ruoyi.common.utils.CollectionUtils.convertMap;
+import static com.ruoyi.common.utils.CollectionUtils.convertSet;
+
 
 @Tag(name = "管理后台 - 流程模型")
 @RestController
 @RequestMapping("/bpm/model")
-@Validated
 public class BpmModelController extends BaseController {
 
     @Resource
@@ -65,16 +75,19 @@ public class BpmModelController extends BaseController {
      
         Map<Long, BpmFormDO> formMap = formService.getFormMap(formIds);
         // 获得 Category Map
+        var modelList=(List<Model>)pageResult.getRows();
         Map<String, BpmCategoryDO> categoryMap = categoryService.getCategoryMap(
-                convertSet(pageResult.getList(), Model::getCategory));
+                convertSet(modelList, Model::getCategory));
         // 获得 Deployment Map
         Set<String> deploymentIds = new HashSet<>();
-        pageResult.getRows().forEach(model -> CollectionUtils.addIfNotNull(deploymentIds, model.getDeploymentId()));
+        modelList.forEach(model -> CollectionUtils.addIfNotNull(deploymentIds, model.getDeploymentId()));
         Map<String, Deployment> deploymentMap = processDefinitionService.getDeploymentMap(deploymentIds);
         // 获得 ProcessDefinition Map
         List<ProcessDefinition> processDefinitions = processDefinitionService.getProcessDefinitionListByDeploymentIds(deploymentIds);
         Map<String, ProcessDefinition> processDefinitionMap = convertMap(processDefinitions, ProcessDefinition::getDeploymentId);
-        return success(BpmModelConvert.INSTANCE.buildModelPage(pageResult, formMap, categoryMap, deploymentMap, processDefinitionMap));
+        var bpmModelRespVOList =buildBpmModelRespVOList(modelList, formMap, categoryMap, deploymentMap, processDefinitionMap);
+
+        return new TableDataInfo(bpmModelRespVOList,pageResult.getTotal());
     }
 
     @GetMapping("/get")
@@ -87,7 +100,7 @@ public class BpmModelController extends BaseController {
             return null;
         }
         byte[] bpmnBytes = modelService.getModelBpmnXML(id);
-        return success(BpmModelConvert.INSTANCE.buildModel(model, bpmnBytes));
+        return success(buildBpmModelRespVO(model, bpmnBytes));
     }
 
     @PostMapping("/create")

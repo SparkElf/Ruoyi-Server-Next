@@ -1,13 +1,14 @@
-package cn.iocoder.yudao.module.bpm.service.definition;
+package com.ruoyi.bpm.service.definition;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.bpm.controller.admin.definition.vo.group.BpmUserGroupPageReqVO;
-import cn.iocoder.yudao.module.bpm.controller.admin.definition.vo.group.BpmUserGroupSaveReqVO;
-import cn.iocoder.yudao.module.bpm.dal.dataobject.definition.BpmUserGroupDO;
-import cn.iocoder.yudao.module.bpm.dal.mysql.definition.BpmUserGroupMapper;
+
+import com.ruoyi.bpm.controller.definition.vo.group.BpmUserGroupPageReqVO;
+import com.ruoyi.bpm.controller.definition.vo.group.BpmUserGroupSaveReqVO;
+import com.ruoyi.bpm.domain.definition.BpmUserGroupDO;
+import com.ruoyi.bpm.mapper.definition.BpmUserGroupMapper;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.CommonStatusEnum;
+import com.ruoyi.common.utils.object.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -16,10 +17,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertMap;
-import static cn.iocoder.yudao.module.bpm.enums.ErrorCodeConstants.USER_GROUP_IS_DISABLE;
-import static cn.iocoder.yudao.module.bpm.enums.ErrorCodeConstants.USER_GROUP_NOT_EXISTS;
+import static com.ruoyi.bpm.enums.ErrorCodeConstants.USER_GROUP_IS_DISABLE;
+import static com.ruoyi.bpm.enums.ErrorCodeConstants.USER_GROUP_NOT_EXISTS;
+import static com.ruoyi.common.exception.ServiceExceptionUtil.exception;
+import static com.ruoyi.common.utils.CollectionUtils.convertMap;
+
 
 /**
  * 用户组 Service 实现类
@@ -80,7 +82,7 @@ public class BpmUserGroupServiceImpl implements BpmUserGroupService {
     }
 
     @Override
-    public PageResult<BpmUserGroupDO> getUserGroupPage(BpmUserGroupPageReqVO pageReqVO) {
+    public TableDataInfo getUserGroupPage(BpmUserGroupPageReqVO pageReqVO) {
         return userGroupMapper.selectPage(pageReqVO);
     }
 

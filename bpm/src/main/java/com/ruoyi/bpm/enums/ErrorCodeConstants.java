@@ -1,7 +1,7 @@
-package com.ruoyi.enums;
+package com.ruoyi.bpm.enums;
 
 
-import com.ruoyi.utils.exception.ErrorCode;
+import com.ruoyi.common.exception.ErrorCode;
 
 /**
  * Bpm 错误码枚举类

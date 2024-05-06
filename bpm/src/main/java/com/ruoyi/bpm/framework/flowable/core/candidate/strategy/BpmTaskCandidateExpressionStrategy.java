@@ -1,9 +1,10 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.strategy;
+package com.ruoyi.bpm.framework.flowable.core.candidate.strategy;
 
 import cn.hutool.core.convert.Convert;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.enums.BpmTaskCandidateStrategyEnum;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.util.FlowableUtils;
+
+import com.ruoyi.bpm.enums.task.BpmTaskCandidateStrategyEnum;
+import com.ruoyi.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
+import com.ruoyi.bpm.framework.flowable.core.util.FlowableUtils;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.springframework.stereotype.Component;
 

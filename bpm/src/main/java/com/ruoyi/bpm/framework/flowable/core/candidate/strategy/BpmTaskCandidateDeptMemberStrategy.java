@@ -1,11 +1,12 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.strategy;
+package com.ruoyi.bpm.framework.flowable.core.candidate.strategy;
 
-import cn.iocoder.yudao.framework.common.util.string.StrUtils;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.enums.BpmTaskCandidateStrategyEnum;
-import cn.iocoder.yudao.module.system.api.dept.DeptApi;
-import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
-import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
+
+import com.ruoyi.bpm.enums.task.BpmTaskCandidateStrategyEnum;
+import com.ruoyi.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.utils.StrUtils;
+import com.ruoyi.system.service.ISysDeptService;
+import com.ruoyi.system.service.ISysUserService;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,8 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertSet;
+import static com.ruoyi.common.utils.CollectionUtils.convertSet;
+
 
 /**
  * 部门的成员 {@link BpmTaskCandidateStrategy} 实现类
@@ -24,9 +26,9 @@ import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.
 public class BpmTaskCandidateDeptMemberStrategy implements BpmTaskCandidateStrategy {
 
     @Resource
-    private DeptApi deptApi;
+    private ISysDeptService deptApi;
     @Resource
-    private AdminUserApi adminUserApi;
+    private ISysUserService userApi;
 
     @Override
     public BpmTaskCandidateStrategyEnum getStrategy() {
@@ -42,8 +44,8 @@ public class BpmTaskCandidateDeptMemberStrategy implements BpmTaskCandidateStrat
     @Override
     public Set<Long> calculateUsers(DelegateExecution execution, String param) {
         Set<Long> deptIds = StrUtils.splitToLongSet(param);
-        List<AdminUserRespDTO> users = adminUserApi.getUserListByDeptIds(deptIds);
-        return convertSet(users, AdminUserRespDTO::getId);
+        List<SysUser> users = userApi.getUserListByDeptIds(deptIds);
+        return convertSet(users, SysUser::getUserId);
     }
 
 }

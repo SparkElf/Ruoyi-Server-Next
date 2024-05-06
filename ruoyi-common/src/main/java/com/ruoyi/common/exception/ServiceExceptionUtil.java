@@ -1,9 +1,7 @@
-package com.ruoyi.bpm.utils.exception.util;
+package com.ruoyi.common.exception;
 
 
-import com.ruoyi.bpm.utils.exception.ErrorCode;
-import com.ruoyi.bpm.utils.exception.ServiceException;
-import com.ruoyi.bpm.utils.exception.enums.GlobalErrorCodeConstants;
+
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;

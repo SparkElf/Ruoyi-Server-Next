@@ -1,10 +1,10 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.strategy;
+package com.ruoyi.bpm.framework.flowable.core.candidate.strategy;
 
-import cn.iocoder.yudao.framework.common.util.string.StrUtils;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
-import cn.iocoder.yudao.module.bpm.framework.flowable.core.enums.BpmTaskCandidateStrategyEnum;
-import cn.iocoder.yudao.module.system.api.permission.PermissionApi;
-import cn.iocoder.yudao.module.system.api.permission.RoleApi;
+
+import com.ruoyi.bpm.enums.task.BpmTaskCandidateStrategyEnum;
+import com.ruoyi.bpm.framework.flowable.core.candidate.BpmTaskCandidateStrategy;
+import com.ruoyi.common.utils.StrUtils;
+import com.ruoyi.system.service.ISysRoleService;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.springframework.stereotype.Component;
 
@@ -20,9 +20,8 @@ import java.util.Set;
 public class BpmTaskCandidateRoleStrategy implements BpmTaskCandidateStrategy {
 
     @Resource
-    private RoleApi roleApi;
-    @Resource
-    private PermissionApi permissionApi;
+    private ISysRoleService roleApi;
+
 
     @Override
     public BpmTaskCandidateStrategyEnum getStrategy() {
@@ -32,13 +31,13 @@ public class BpmTaskCandidateRoleStrategy implements BpmTaskCandidateStrategy {
     @Override
     public void validateParam(String param) {
         Set<Long> roleIds = StrUtils.splitToLongSet(param);
-        roleApi.validRoleList(roleIds);
+        roleApi.validateRoleList(roleIds);
     }
 
     @Override
     public Set<Long> calculateUsers(DelegateExecution execution, String param) {
         Set<Long> roleIds = StrUtils.splitToLongSet(param);
-        return permissionApi.getUserRoleIdListByRoleIds(roleIds);
+        return roleApi.getUserRoleIdListByRoleIds(roleIds);
     }
 
 }

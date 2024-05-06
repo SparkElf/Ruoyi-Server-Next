@@ -1,15 +1,19 @@
 package com.ruoyi.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import javax.validation.Validator;
+
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.ruoyi.common.enums.CommonStatusEnum;
+import com.ruoyi.common.utils.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
+
 import com.ruoyi.common.annotation.DataScope;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysRole;
@@ -29,6 +33,10 @@ import com.ruoyi.system.mapper.SysUserPostMapper;
 import com.ruoyi.system.mapper.SysUserRoleMapper;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysUserService;
+
+import static com.ruoyi.common.exception.ErrorCodeConstants.USER_IS_DISABLE;
+import static com.ruoyi.common.exception.ErrorCodeConstants.USER_NOT_EXISTS;
+import static com.ruoyi.common.exception.ServiceExceptionUtil.exception;
 
 /**
  * 用户 业务层处理
@@ -61,6 +69,49 @@ public class SysUserServiceImpl implements ISysUserService
     @Autowired
     protected Validator validator;
 
+
+    @Override
+    public List<SysUser> selectUserByIds(Collection<Long> ids){
+        return userMapper.selectBatchIds(ids);
+    }
+    @Override
+    public List<SysUser> getUserListByPostIds(Set<Long> postIds){
+        var userMap=new HashMap<Long,SysUser>();
+        for(Long postId : postIds){
+            var link=userPostMapper.selectOne(new LambdaQueryWrapper<SysUserPost>().eq(SysUserPost::getPostId, postId));
+            var user=userMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUserId, link.getUserId()));
+            userMap.put(user.getUserId(),user);
+        }
+        return userMap.values().stream().toList();
+    }
+    @Override
+    public List<SysUser> getUserListByDeptIds(Set<Long> deptIds){
+        return userMapper.selectList(new LambdaQueryWrapper<SysUser>().in(SysUser::getDeptId, deptIds));
+    }
+    @Override
+    public void validateUserList(Collection<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return;
+        }
+        // 获得岗位信息
+        List<SysUser> users = userMapper.selectBatchIds(ids);
+        Map<Long, SysUser> userMap = CollectionUtils.convertMap(users, SysUser::getUserId);
+        // 校验
+        ids.forEach(id -> {
+            SysUser user = userMap.get(id);
+            if (user == null) {
+                throw exception(USER_NOT_EXISTS);
+            }
+            if (!CommonStatusEnum.ENABLE.getStatus().equals(user.getStatus())) {
+                throw exception(USER_IS_DISABLE, user.getNickName());
+            }
+        });
+    }
+    public Map<Long,SysUser> getUserMap(Collection<Long> userIds){
+        return userIds.stream().map(userId->{
+            return userMapper.selectUserById(userId);
+        }).collect(Collectors.toMap(SysUser::getUserId, user->user));
+    }
     /**
      * 根据条件分页查询用户列表
      * 
@@ -134,7 +185,7 @@ public class SysUserServiceImpl implements ISysUserService
     public String selectUserRoleGroup(String userName)
     {
         List<SysRole> list = roleMapper.selectRolesByUserName(userName);
-        if (CollectionUtils.isEmpty(list))
+        if (list.isEmpty())
         {
             return StringUtils.EMPTY;
         }
@@ -151,7 +202,7 @@ public class SysUserServiceImpl implements ISysUserService
     public String selectUserPostGroup(String userName)
     {
         List<SysPost> list = postMapper.selectPostsByUserName(userName);
-        if (CollectionUtils.isEmpty(list))
+        if (list.isEmpty())
         {
             return StringUtils.EMPTY;
         }

@@ -1,7 +1,7 @@
-package cn.iocoder.yudao.module.bpm.framework.flowable.core.listener;
+package com.ruoyi.bpm.framework.flowable.core.listener;
 
-import cn.iocoder.yudao.module.bpm.service.task.BpmProcessInstanceService;
-import com.google.common.collect.ImmutableSet;
+
+import com.ruoyi.bpm.service.task.BpmProcessInstanceService;
 import org.flowable.common.engine.api.delegate.event.FlowableEngineEntityEvent;
 import org.flowable.common.engine.api.delegate.event.FlowableEngineEventType;
 import org.flowable.engine.delegate.event.AbstractFlowableEngineEventListener;
@@ -25,10 +25,9 @@ public class BpmProcessInstanceEventListener extends AbstractFlowableEngineEvent
     @Lazy
     private BpmProcessInstanceService processInstanceService;
 
-    public static final Set<FlowableEngineEventType> PROCESS_INSTANCE_EVENTS = ImmutableSet.<FlowableEngineEventType>builder()
-                     .add(FlowableEngineEventType.PROCESS_CANCELLED)
-                     .add(FlowableEngineEventType.PROCESS_COMPLETED)
-                     .build();
+    public static final Set<FlowableEngineEventType> PROCESS_INSTANCE_EVENTS = Set.of(
+                     FlowableEngineEventType.PROCESS_CANCELLED,
+                     FlowableEngineEventType.PROCESS_COMPLETED);
 
     public BpmProcessInstanceEventListener(){
         super(PROCESS_INSTANCE_EVENTS);

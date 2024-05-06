@@ -1,16 +1,16 @@
-package com.ruoyi.service.definition;
+package com.ruoyi.bpm.service.definition;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.object.BeanUtils;
-import com.ruoyi.controller.definition.vo.process.BpmProcessDefinitionPageReqVO;
-import com.ruoyi.domain.definition.BpmFormDO;
-import com.ruoyi.domain.definition.BpmProcessDefinitionInfoDO;
-import com.ruoyi.enums.BpmnModelConstants;
-import com.ruoyi.mapper.definition.BpmProcessDefinitionInfoMapper;
-import com.ruoyi.service.definition.dto.BpmModelMetaInfoRespDTO;
+import com.ruoyi.bpm.controller.definition.vo.process.BpmProcessDefinitionPageReqVO;
+import com.ruoyi.bpm.domain.definition.BpmFormDO;
+import com.ruoyi.bpm.domain.definition.BpmProcessDefinitionInfoDO;
+import com.ruoyi.bpm.enums.BpmnModelConstants;
+import com.ruoyi.bpm.mapper.definition.BpmProcessDefinitionInfoMapper;
+import com.ruoyi.bpm.service.definition.dto.BpmModelMetaInfoRespDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.common.engine.impl.db.SuspensionState;
@@ -26,10 +26,11 @@ import javax.annotation.Resource;
 import java.util.*;
 
 
+import static com.ruoyi.common.exception.ServiceExceptionUtil.exception;
 import static com.ruoyi.common.utils.CollectionUtils.addIfNotNull;
-import static com.ruoyi.enums.ErrorCodeConstants.PROCESS_DEFINITION_KEY_NOT_MATCH;
-import static com.ruoyi.enums.ErrorCodeConstants.PROCESS_DEFINITION_NAME_NOT_MATCH;
-import static com.ruoyi.utils.exception.util.ServiceExceptionUtil.exception;
+import static com.ruoyi.bpm.enums.ErrorCodeConstants.PROCESS_DEFINITION_KEY_NOT_MATCH;
+import static com.ruoyi.bpm.enums.ErrorCodeConstants.PROCESS_DEFINITION_NAME_NOT_MATCH;
+
 import static java.util.Collections.emptyList;
 
 /**

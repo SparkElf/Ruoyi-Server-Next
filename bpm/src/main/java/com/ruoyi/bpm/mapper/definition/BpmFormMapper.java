@@ -1,17 +1,15 @@
-package com.ruoyi.mapper.definition;
+package com.ruoyi.bpm.mapper.definition;
 
 
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.PageUtils;
-import com.ruoyi.common.utils.StrUtils;
-import com.ruoyi.controller.definition.vo.form.BpmFormPageReqVO;
-import com.ruoyi.domain.definition.BpmFormDO;
+import com.ruoyi.bpm.controller.definition.vo.form.BpmFormPageReqVO;
+import com.ruoyi.bpm.domain.definition.BpmFormDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

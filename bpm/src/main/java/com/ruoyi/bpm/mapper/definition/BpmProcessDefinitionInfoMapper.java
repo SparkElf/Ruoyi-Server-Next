@@ -1,9 +1,9 @@
-package com.ruoyi.mapper.definition;
+package com.ruoyi.bpm.mapper.definition;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.ruoyi.domain.definition.BpmProcessDefinitionInfoDO;
+import com.ruoyi.bpm.domain.definition.BpmProcessDefinitionInfoDO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Collection;
