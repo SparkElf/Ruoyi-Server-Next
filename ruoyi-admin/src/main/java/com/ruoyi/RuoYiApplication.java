@@ -6,14 +6,12 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 /**
  * 启动程序
- * 
+ *
  * @author ruoyi
  */
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class ,
-        org.flowable.spring.boot.RestApiAutoConfiguration.class,
-        org.flowable.spring.boot.FlowableSecurityAutoConfiguration.class},
-        scanBasePackages = {"com.ruoyi"}
-)
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class})
+        //org.flowable.spring.boot.RestApiAutoConfiguration.class,
+        	//org.flowable.spring.boot.SecurityAutoConfiguration.class})
 public class RuoYiApplication
 {
     public static void main(String[] args)

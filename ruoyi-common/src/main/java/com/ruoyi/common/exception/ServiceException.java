@@ -4,7 +4,7 @@ package com.ruoyi.common.exception;
 
 /**
  * 业务异常
- * 
+ *
  * @author ruoyi
  */
 public final class ServiceException extends RuntimeException
@@ -38,7 +38,6 @@ public final class ServiceException extends RuntimeException
         this.code = errorCode.getCode();
         this.message = errorCode.getMsg();
     }
-
     public ServiceException(String message)
     {
         this.message = message;
@@ -54,6 +53,7 @@ public final class ServiceException extends RuntimeException
         this.message = message;
         this.code = code;
     }
+
     public String getDetailMessage()
     {
         return detailMessage;

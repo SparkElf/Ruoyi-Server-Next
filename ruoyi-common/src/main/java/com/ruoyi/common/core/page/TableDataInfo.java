@@ -1,5 +1,7 @@
 package com.ruoyi.common.core.page;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.constant.HttpStatus;
 
 import java.io.Serializable;
@@ -8,7 +10,7 @@ import java.util.List;
 
 /**
  * 表格分页数据对象
- * 
+ *
  * @author ruoyi
  */
 public class TableDataInfo implements Serializable
@@ -32,24 +34,31 @@ public class TableDataInfo implements Serializable
      */
     public TableDataInfo()
     {
-        this.total=0;
-        this.rows=new ArrayList<>();
         setCode(HttpStatus.SUCCESS);
         setMsg("查询成功");
+        setRows(new ArrayList<>());
+        setTotal(0);
+    }
+    public TableDataInfo(IPage<?> pageResult)
+    {
+        setCode(HttpStatus.SUCCESS);
+        setMsg("查询成功");
+        setRows(pageResult.getRecords());
+        setTotal(pageResult.getTotal());
     }
 
     /**
      * 分页
-     * 
+     *
      * @param list 列表数据
      * @param total 总记录数
      */
     public TableDataInfo(List<?> list, long total)
     {
-        this.rows = list;
-        this.total = total;
         setCode(HttpStatus.SUCCESS);
         setMsg("查询成功");
+        setRows(list);
+        setTotal(total);
     }
 
     public long getTotal()

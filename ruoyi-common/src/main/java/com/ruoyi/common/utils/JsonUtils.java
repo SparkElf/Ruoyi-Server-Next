@@ -1,7 +1,6 @@
 package com.ruoyi.common.utils;
 
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
+
 import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -32,6 +31,7 @@ public class JsonUtils {
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL); // 忽略 null 值
+
     }
 
     /**
@@ -61,7 +61,7 @@ public class JsonUtils {
     }
 
     public static <T> T parseObject(String text, Class<T> clazz) {
-        if (StrUtil.isEmpty(text)) {
+        if (StringUtils.isEmpty(text)) {
             return null;
         }
         try {
@@ -73,7 +73,7 @@ public class JsonUtils {
     }
 
     public static <T> T parseObject(String text, String path, Class<T> clazz) {
-        if (StrUtil.isEmpty(text)) {
+        if (StringUtils.isEmpty(text)) {
             return null;
         }
         try {
@@ -87,7 +87,7 @@ public class JsonUtils {
     }
 
     public static <T> T parseObject(String text, Type type) {
-        if (StrUtil.isEmpty(text)) {
+        if (StringUtils.isEmpty(text)) {
             return null;
         }
         try {
@@ -108,14 +108,14 @@ public class JsonUtils {
      * @return 对象
      */
     public static <T> T parseObject2(String text, Class<T> clazz) {
-        if (StrUtil.isEmpty(text)) {
+        if (StringUtils.isEmpty(text)) {
             return null;
         }
         return JSONUtil.toBean(text, clazz);
     }
 
     public static <T> T parseObject(byte[] bytes, Class<T> clazz) {
-        if (ArrayUtil.isEmpty(bytes)) {
+        if (bytes.length==0) {
             return null;
         }
         try {
@@ -151,7 +151,7 @@ public class JsonUtils {
     }
 
     public static <T> List<T> parseArray(String text, Class<T> clazz) {
-        if (StrUtil.isEmpty(text)) {
+        if (StringUtils.isEmpty(text)) {
             return new ArrayList<>();
         }
         try {
@@ -163,7 +163,7 @@ public class JsonUtils {
     }
 
     public static <T> List<T> parseArray(String text, String path, Class<T> clazz) {
-        if (StrUtil.isEmpty(text)) {
+        if (StringUtils.isEmpty(text)) {
             return null;
         }
         try {

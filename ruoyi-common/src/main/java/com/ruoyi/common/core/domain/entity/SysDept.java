@@ -7,18 +7,17 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 部门表 sys_dept
- * 
+ *
  * @author ruoyi
  */
-@TableName("sys_dept")
+@Data
 public class SysDept extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -39,6 +38,8 @@ public class SysDept extends BaseEntity
     /** 显示顺序 */
     private Integer orderNum;
 
+    /** 负责人Id */
+    private String leaderId;
     /** 负责人 */
     private String leader;
 
@@ -56,7 +57,7 @@ public class SysDept extends BaseEntity
 
     /** 父部门名称 */
     private String parentName;
-    
+
     /** 子部门 */
     private List<SysDept> children = new ArrayList<SysDept>();
 
